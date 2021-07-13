@@ -37,7 +37,7 @@ namespace SDRM.Controllers{
             _context.RoadMapItems.Add(item);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetRoadMapItem), item.ID, item);
+            return CreatedAtAction(nameof(GetRoadMapItem), new{id = item.ID}, item);
         }
     }
 }

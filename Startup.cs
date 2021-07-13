@@ -30,6 +30,7 @@ namespace SDRM
         {
 
             services.AddControllers();
+            services.AddControllersWithViews();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SDRM", Version = "v1" });
@@ -56,6 +57,10 @@ namespace SDRM
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute(
+                    "default",
+                    "/{controller=RoadMapView}/{action=Index}"
+                );
             });
         }
     }

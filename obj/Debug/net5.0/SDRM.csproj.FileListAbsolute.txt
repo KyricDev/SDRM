@@ -38,3 +38,16 @@ C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\SDRM.dll
 C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\ref\SDRM.dll
 C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\SDRM.pdb
 C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\SDRM.genruntimeconfig.cache
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\package-lock.json
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\package.json
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\SDRM.Views.dll
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\SDRM.Views.pdb
+C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\SDRM.RazorAssemblyInfo.cache
+C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\SDRM.RazorAssemblyInfo.cs
+C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\SDRM.TagHelpers.input.cache
+C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\SDRM.TagHelpers.output.cache
+C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\SDRM.RazorCoreGenerate.cache
+C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
+C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\SDRM.RazorTargetAssemblyInfo.cs
+C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\SDRM.Views.pdb
+C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\Razor\Views\RoadMapView\Index.cshtml.g.cs
