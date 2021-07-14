@@ -53,6 +53,8 @@ namespace SDRM
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseStaticFiles();
+            app.UseDefaultFiles();
 
             app.UseEndpoints(endpoints =>
             {
