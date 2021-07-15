@@ -39,5 +39,23 @@ namespace SDRM.Controllers{
 
             return CreatedAtAction(nameof(GetRoadMapItem), new{id = item.ID}, item);
         }
+
+        [HttpDelete]
+        public async Task<ActionResult<RoadMapItem>> DeleteRoadMapItem(int id){
+            var item = await _context.RoadMapItems.Where(i => i.ID == id).FirstAsync();
+
+            _context.RoadMapItems.Remove(item);
+            await _context.SaveChangesAsync();
+
+            return Ok(item);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<RoadMapItem>> PutRoadMapItem(RoadMapItem item){
+            _context.RoadMapItems.Update(item);
+            await _context.SaveChangesAsync();
+
+            return Ok(item);
+        }
     }
 }

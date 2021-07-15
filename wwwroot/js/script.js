@@ -9,24 +9,38 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Root = function (_React$Component) {
     _inherits(Root, _React$Component);
 
-    function Root() {
+    function Root(props) {
         _classCallCheck(this, Root);
 
-        return _possibleConstructorReturn(this, (Root.__proto__ || Object.getPrototypeOf(Root)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Root.__proto__ || Object.getPrototypeOf(Root)).call(this, props));
+
+        _this.state = { content: "" };
+        return _this;
     }
 
     _createClass(Root, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            fetch('https://localhost:5001/RoadMap/1').then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                _this2.setState({ content: data });
+                console.log("Starting log . . .");
+                console.log(data);
+                console.log(data.title);
+                console.log("Ending log . . .");
+            });
+        }
+    }, {
         key: "render",
         value: function render() {
-            var content = fetch('https://localhost:5001/RoadMap/1').then(function (response) {
-                return response.json();
-            });
-
             return React.createElement(
                 "h1",
                 null,
                 "Title: ",
-                content.title
+                this.state.content.title
             );
         }
     }]);
