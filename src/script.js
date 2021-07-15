@@ -18,9 +18,12 @@ class Root extends React.Component{
 
     render(){
         return(
-            <h1> 
-                Title: {this.state.content.title}
-            </h1>
+            <div>
+                <h1>Title: {this.state.content.title}</h1> 
+                <h2>
+                    Content: {this.state.content.content}
+                </h2>
+            </div>
         )
     }
 }

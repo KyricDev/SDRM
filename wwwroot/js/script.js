@@ -37,10 +37,20 @@ var Root = function (_React$Component) {
         key: "render",
         value: function render() {
             return React.createElement(
-                "h1",
+                "div",
                 null,
-                "Title: ",
-                this.state.content.title
+                React.createElement(
+                    "h1",
+                    null,
+                    "Title: ",
+                    this.state.content.title
+                ),
+                React.createElement(
+                    "h2",
+                    null,
+                    "Content: ",
+                    this.state.content.content
+                )
             );
         }
     }]);
