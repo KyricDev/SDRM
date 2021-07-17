@@ -35,7 +35,16 @@ namespace SDRM
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SDRM", Version = "v1" });
             });
-            services.AddDbContext<RoadMapItemContext>(options => options.UseInMemoryDatabase("RoadMapItems"));
+            services.AddDbContext<RoadMapItemContext>(options => 
+                options.UseNpgsql(Configuration.GetConnectionString("RoadMapItemContext"))
+            );
+            
+            services.AddAuthentication(option => {
+                option.DefaultScheme = "DefaultCookie";
+            })
+                    .AddCookie("DefaultCookie", options => {
+                        options.Cookie.Name = "Default";
+                    });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,6 +61,7 @@ namespace SDRM
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
             app.UseStaticFiles();
             app.UseDefaultFiles();

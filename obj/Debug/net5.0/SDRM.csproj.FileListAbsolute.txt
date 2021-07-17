@@ -51,3 +51,7 @@ C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
 C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\SDRM.RazorTargetAssemblyInfo.cs
 C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\SDRM.Views.pdb
 C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\Razor\Views\RoadMapView\Index.cshtml.g.cs
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\Npgsql.dll
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\Humanizer.dll
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
