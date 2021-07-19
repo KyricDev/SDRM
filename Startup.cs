@@ -71,7 +71,7 @@ namespace SDRM
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     "default",
-                    "/{controller=RoadMapView}/{action=Index}"
+                    "/{controller=Login}/{action=Login}"
                 );
             });
         }
