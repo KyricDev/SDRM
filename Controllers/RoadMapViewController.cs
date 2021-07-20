@@ -6,7 +6,11 @@ namespace SDRM.Controllers{
 
         }
 
-        public IActionResult Index(){
+        [HttpPost]
+        public IActionResult Index(string Username, string Password){
+            ViewBag.Username = Username;
+            ViewBag.Password = Password;
+
             return View();
         }
     }

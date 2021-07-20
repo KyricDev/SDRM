@@ -84,7 +84,7 @@ var FormField = function (_React$Component) {
                     null,
                     this.state.field
                 ),
-                React.createElement("input", { type: "text", onChange: this.updateField }),
+                React.createElement("input", { type: "text", name: this.state.field, onChange: this.updateField }),
                 React.createElement(
                     "p",
                     null,
@@ -134,22 +134,16 @@ var RegisterForm = function (_React$Component2) {
                     null,
                     "Welcome!"
                 ),
-                React.createElement(FormField, { field: "Username", updateField: this.updateField.bind(this, "Username") }),
-                React.createElement(FormField, { field: "Password", updateField: this.updateField.bind(this, "Password") }),
                 React.createElement(
-                    "button",
-                    null,
-                    "Submit"
-                ),
-                React.createElement(
-                    "p",
-                    null,
-                    this.state.username
-                ),
-                React.createElement(
-                    "p",
-                    null,
-                    this.state.password
+                    "form",
+                    { method: "Post", action: "/RoadMapView/Index" },
+                    React.createElement(FormField, { field: "Username", updateField: this.updateField.bind(this, "Username") }),
+                    React.createElement(FormField, { field: "Password", updateField: this.updateField.bind(this, "Password") }),
+                    React.createElement(
+                        "button",
+                        null,
+                        "Submit"
+                    )
                 )
             );
         }
