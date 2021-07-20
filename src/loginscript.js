@@ -54,7 +54,7 @@ class FormField extends React.Component {
         return (
             <div>
                 <label>{this.state.field}</label>
-                <input type="text" onChange={this.updateField}></input>
+                <input type="text" name={this.state.field} onChange={this.updateField}></input>
                 <p>{this.state.value}</p>
             </div>
         )
@@ -79,11 +79,11 @@ class RegisterForm extends React.Component {
             <div>
                 <h1>Software Developer RoadMap</h1>
                 <h2>Welcome!</h2>
-                <FormField field="Username" updateField={this.updateField.bind(this, "Username")}/>
-                <FormField field="Password" updateField={this.updateField.bind(this, "Password")}/>
-                <button>Submit</button>
-                <p>{this.state.username}</p>
-                <p>{this.state.password}</p>
+                <form method="Post" action="/RoadMapView/Index">
+                    <FormField field="Username" updateField={this.updateField.bind(this, "Username")}/>
+                    <FormField field="Password" updateField={this.updateField.bind(this, "Password")}/>
+                    <button >Submit</button>
+                </form>
             </div>
         )
     }
