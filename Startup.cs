@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,6 +15,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using SDRM.Data;
+using SDRM.Models;
 
 namespace SDRM
 {
@@ -38,6 +41,12 @@ namespace SDRM
             services.AddDbContext<RoadMapItemContext>(options => 
                 options.UseNpgsql(Configuration.GetConnectionString("RoadMapItemContext"))
             );
+            services.AddDbContext<ApplicationUserContext>(options => 
+                options.UseNpgsql(Configuration.GetConnectionString("ApplicationUserContext"))
+            );
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationUserContext>()
+                .AddDefaultTokenProviders();
             
             services.AddAuthentication(option => {
                 option.DefaultScheme = "DefaultCookie";
