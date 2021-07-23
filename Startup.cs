@@ -80,7 +80,7 @@ namespace SDRM
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     "default",
-                    "/{controller=Login}/{action=Login}"
+                    "/{controller=UserView}/{action=Register}"
                 );
             });
         }

@@ -6,31 +6,68 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Root = function (_React$Component) {
-    _inherits(Root, _React$Component);
-
-    function Root(props) {
-        _classCallCheck(this, Root);
-
-        var _this = _possibleConstructorReturn(this, (Root.__proto__ || Object.getPrototypeOf(Root)).call(this, props));
-
-        _this.state = { content: "" };
-        return _this;
+/*
+class Root extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {content: ""};
     }
 
-    _createClass(Root, [{
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            var _this2 = this;
-
-            fetch('https://localhost:5001/RoadMap/1').then(function (response) {
-                return response.json();
-            }).then(function (data) {
-                _this2.setState({ content: data });
+    componentDidMount(){
+        fetch('https://localhost:5001/RoadMap/1')
+        .then(response => response.json())
+        .then(data => {
+                this.setState({content: data});
                 console.log("Starting log . . .");
                 console.log(data);
                 console.log(data.title);
                 console.log("Ending log . . .");
+            })
+    }
+
+    render(){
+        return(
+            <div>
+                <h1>Title: {this.state.content.title}</h1> 
+                <h2>
+                    Content: {this.state.content.content}
+                </h2>
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(
+    <Root />,
+    document.getElementById("root")
+)
+*/
+
+export var FormField = function (_React$Component) {
+    _inherits(FormField, _React$Component);
+
+    function FormField(props) {
+        _classCallCheck(this, FormField);
+
+        var _this = _possibleConstructorReturn(this, (FormField.__proto__ || Object.getPrototypeOf(FormField)).call(this, props));
+
+        _this.state = { field: "Default Field", value: "" };
+        _this.updateField = _this.updateField.bind(_this);
+        return _this;
+    }
+
+    _createClass(FormField, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            this.setState({ field: this.props.field });
+        }
+    }, {
+        key: "updateField",
+        value: function updateField(e) {
+            var _this2 = this;
+
+            this.setState({ value: e.target.value }, function () {
+                return _this2.props.updateField(_this2.state.value);
             });
         }
     }, {
@@ -40,22 +77,19 @@ var Root = function (_React$Component) {
                 "div",
                 null,
                 React.createElement(
-                    "h1",
+                    "label",
                     null,
-                    "Title: ",
-                    this.state.content.title
+                    this.state.field
                 ),
+                React.createElement("input", { type: "text", name: this.state.field, onChange: this.updateField }),
                 React.createElement(
-                    "h2",
+                    "p",
                     null,
-                    "Content: ",
-                    this.state.content.content
+                    this.state.value
                 )
             );
         }
     }]);
 
-    return Root;
+    return FormField;
 }(React.Component);
-
-ReactDOM.render(React.createElement(Root, null), document.getElementById("root"));

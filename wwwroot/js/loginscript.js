@@ -112,9 +112,9 @@ var RegisterForm = function (_React$Component2) {
     _createClass(RegisterForm, [{
         key: "updateField",
         value: function updateField(field, e) {
-            if (field == "Username") {
+            if (field == "username") {
                 this.setState({ username: e });
-            } else if (field == "Password") {
+            } else if (field == "password") {
                 this.setState({ password: e });
             }
         }
@@ -137,8 +137,8 @@ var RegisterForm = function (_React$Component2) {
                 React.createElement(
                     "form",
                     { method: "Post", action: "/RoadMapView/Index" },
-                    React.createElement(FormField, { field: "Username", updateField: this.updateField.bind(this, "Username") }),
-                    React.createElement(FormField, { field: "Password", updateField: this.updateField.bind(this, "Password") }),
+                    React.createElement(FormField, { field: "username", updateField: this.updateField.bind(this, "username") }),
+                    React.createElement(FormField, { field: "password", updateField: this.updateField.bind(this, "password") }),
                     React.createElement(
                         "button",
                         null,

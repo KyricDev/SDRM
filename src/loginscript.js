@@ -67,10 +67,10 @@ class RegisterForm extends React.Component {
         this.state = {username: "", password: ""};
     }
     updateField(field, e){
-        if (field == "Username"){
+        if (field == "username"){
             this.setState({username: e});
         }
-        else if (field == "Password"){
+        else if (field == "password"){
             this.setState({password: e});
         }
     }
@@ -80,8 +80,8 @@ class RegisterForm extends React.Component {
                 <h1>Software Developer RoadMap</h1>
                 <h2>Welcome!</h2>
                 <form method="Post" action="/RoadMapView/Index">
-                    <FormField field="Username" updateField={this.updateField.bind(this, "Username")}/>
-                    <FormField field="Password" updateField={this.updateField.bind(this, "Password")}/>
+                    <FormField field="username" updateField={this.updateField.bind(this, "username")}/>
+                    <FormField field="password" updateField={this.updateField.bind(this, "password")}/>
                     <button >Submit</button>
                 </form>
             </div>

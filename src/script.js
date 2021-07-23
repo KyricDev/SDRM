@@ -1,3 +1,4 @@
+/*
 class Root extends React.Component{
     constructor(props){
         super(props);
@@ -32,3 +33,27 @@ ReactDOM.render(
     <Root />,
     document.getElementById("root")
 )
+*/
+
+export class FormField extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {field: "Default Field", value: ""};
+        this.updateField = this.updateField.bind(this);
+    }
+    componentDidMount(){
+        this.setState({field: this.props.field});
+    }
+    updateField(e){
+        this.setState({value: e.target.value}, () => this.props.updateField(this.state.value));
+    }
+    render() {
+        return (
+            <div>
+                <label>{this.state.field}</label>
+                <input type="text" name={this.state.field} onChange={this.updateField}></input>
+                <p>{this.state.value}</p>
+            </div>
+        )
+    }
+}
