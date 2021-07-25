@@ -8,5 +8,6 @@ namespace SDRM.Data{
         public ApplicationUserContext(DbContextOptions options) : base(options){
 
         }
+        public DbSet<ApplicationUser> ApplicationUsers {get; set;}
     }
 }

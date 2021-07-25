@@ -5,5 +5,8 @@ namespace SDRM.Models{
         public ApplicationUser(string username) : base(username){ 
             this.UserName = username;
         }
+        public ApplicationUser(){
+            
+        }
     }
 }

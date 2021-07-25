@@ -34,6 +34,7 @@ namespace SDRM
 
             services.AddControllers();
             services.AddControllersWithViews();
+            services.AddLogging();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SDRM", Version = "v1" });
@@ -44,7 +45,14 @@ namespace SDRM
             services.AddDbContext<ApplicationUserContext>(options => 
                 options.UseNpgsql(Configuration.GetConnectionString("ApplicationUserContext"))
             );
-            services.AddIdentity<ApplicationUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>(options => {
+                options.Password.RequireDigit = false;
+                options.Password.RequiredLength = 5;
+                options.Password.RequiredUniqueChars = 0;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            })
                 .AddEntityFrameworkStores<ApplicationUserContext>()
                 .AddDefaultTokenProviders();
             
@@ -80,7 +88,7 @@ namespace SDRM
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     "default",
-                    "/{controller=UserView}/{action=Register}"
+                    "/controller=RoadMapView/{action=Index}"
                 );
             });
         }

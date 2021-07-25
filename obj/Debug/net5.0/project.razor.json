@@ -15619,18 +15619,23 @@
   "RootNamespace": "SDRM",
   "Documents": [
     {
-      "FilePath": "c:\\Users\\Ricky\\repos\\SDRM\\Views\\Login\\Login.cshtml",
-      "TargetPath": "Views\\Login\\Login.cshtml",
-      "FileKind": "mvc"
-    },
-    {
       "FilePath": "c:\\Users\\Ricky\\repos\\SDRM\\Views\\_ViewImports.cshtml",
       "TargetPath": "Views\\_ViewImports.cshtml",
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\Ricky\\repos\\SDRM\\Views\\UserView\\Register.cshtml",
+      "TargetPath": "Views\\UserView\\Register.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\Ricky\\repos\\SDRM\\Views\\RoadMapView\\Index.cshtml",
       "TargetPath": "Views\\RoadMapView\\Index.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\Ricky\\repos\\SDRM\\Views\\UserView\\Login.cshtml",
+      "TargetPath": "Views\\UserView\\Login.cshtml",
       "FileKind": "mvc"
     }
   ],

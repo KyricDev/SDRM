@@ -3,30 +3,41 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using SDRM.Models;
 using SDRM.Data;
 
 namespace SDRM.Controllers{
+    [Route("")]
+    [Route("user")]
     [AllowAnonymous]
     public class UserViewController   :   Controller{
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ILogger<UserViewController> _logger;
+        private readonly ApplicationUserContext _context;
 
         public UserViewController(UserManager<ApplicationUser>   userManager, 
-                                  SignInManager<ApplicationUser> signInManager){
+                                  SignInManager<ApplicationUser> signInManager,
+                                  ILogger<UserViewController> logger,
+                                  ApplicationUserContext context){
             _userManager = userManager;
             _signInManager = signInManager;
+            _logger = logger;
+            _context = context;
         }
 
         [HttpGet]
-        [ActionName("Login")]
+        [Route("login")]
+        [Route("/")]
+        [Route("/user")]
         public IActionResult Login(){
             return View();
         }
 
         [HttpPost]
-        [ActionName("Login")]
+        [Route("login")]
         public IActionResult PostLogin(string username, 
                                        string password){
             _signInManager.PasswordSignInAsync(username, password, true, false);
@@ -35,21 +46,29 @@ namespace SDRM.Controllers{
         }
 
         [HttpGet]
-        [ActionName("Register")]
+        [Route("register")]
         public IActionResult Register(){
+            _logger.LogInformation($"Get: Register Get");
+
             return View();
         }       
 
         [HttpPost]
-        [ActionName("Register")]
+        [Route("register")]
         public async Task<IActionResult> PostRegister(string username, 
-                                                      string password, 
-                                                      string confirmpassword){
-            var user = new ApplicationUser(username);
+                                                      string password){
+            var user = new ApplicationUser(){
+                UserName = username
+            };
+
+            _logger.LogInformation($"{user}");
            
-            await _userManager.CreateAsync(user);
+            var result = await _userManager.CreateAsync(user, password);
             
-            return View();
+            _logger.LogInformation($"Logger is Working");
+            _logger.LogInformation($"{result}");
+
+            return View("Login");
         }
     }
 }
