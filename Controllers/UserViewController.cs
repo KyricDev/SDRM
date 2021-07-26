@@ -33,22 +33,26 @@ namespace SDRM.Controllers{
         [Route("/")]
         [Route("/user")]
         public IActionResult Login(){
+            _logger.LogInformation($"Get: Login Page");
+
             return View();
         }
 
         [HttpPost]
         [Route("login")]
-        public IActionResult PostLogin(string username, 
-                                       string password){
-            _signInManager.PasswordSignInAsync(username, password, true, false);
+        public async Task<IActionResult> PostLogin(string username, 
+                                                   string password){
+            var result = await _signInManager.PasswordSignInAsync(username, password, true, false);
 
-            return View();
+            _logger.LogInformation($"{result}");
+
+            return View("Views/RoadMapView/Index.cshtml");
         }
 
         [HttpGet]
         [Route("register")]
         public IActionResult Register(){
-            _logger.LogInformation($"Get: Register Get");
+            _logger.LogInformation($"Get: Register Page");
 
             return View();
         }       

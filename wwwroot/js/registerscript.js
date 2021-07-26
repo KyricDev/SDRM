@@ -6,68 +6,18 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-//import { FormField } from "/js/script.js";
-var FormField = function (_React$Component) {
-    _inherits(FormField, _React$Component);
+import { FormField } from "/js/script.js";
 
-    function FormField(props) {
-        _classCallCheck(this, FormField);
-
-        var _this = _possibleConstructorReturn(this, (FormField.__proto__ || Object.getPrototypeOf(FormField)).call(this, props));
-
-        _this.state = { field: "Default Field", value: "" };
-        _this.updateField = _this.updateField.bind(_this);
-        return _this;
-    }
-
-    _createClass(FormField, [{
-        key: "componentDidMount",
-        value: function componentDidMount() {
-            this.setState({ field: this.props.field });
-        }
-    }, {
-        key: "updateField",
-        value: function updateField(e) {
-            var _this2 = this;
-
-            this.setState({ value: e.target.value }, function () {
-                return _this2.props.updateField(_this2.state.value);
-            });
-        }
-    }, {
-        key: "render",
-        value: function render() {
-            return React.createElement(
-                "div",
-                null,
-                React.createElement(
-                    "label",
-                    null,
-                    this.state.field
-                ),
-                React.createElement("input", { type: "text", name: this.state.field, onChange: this.updateField }),
-                React.createElement(
-                    "p",
-                    null,
-                    this.state.value
-                )
-            );
-        }
-    }]);
-
-    return FormField;
-}(React.Component);
-
-var RegisterForm = function (_React$Component2) {
-    _inherits(RegisterForm, _React$Component2);
+var RegisterForm = function (_React$Component) {
+    _inherits(RegisterForm, _React$Component);
 
     function RegisterForm(props) {
         _classCallCheck(this, RegisterForm);
 
-        var _this3 = _possibleConstructorReturn(this, (RegisterForm.__proto__ || Object.getPrototypeOf(RegisterForm)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (RegisterForm.__proto__ || Object.getPrototypeOf(RegisterForm)).call(this, props));
 
-        _this3.state = { username: "", password: "" };
-        return _this3;
+        _this.state = { username: "", password: "" };
+        return _this;
     }
 
     _createClass(RegisterForm, [{
