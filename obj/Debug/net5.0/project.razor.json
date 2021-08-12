@@ -15624,8 +15624,8 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\Ricky\\repos\\SDRM\\Views\\UserView\\Register.cshtml",
-      "TargetPath": "Views\\UserView\\Register.cshtml",
+      "FilePath": "c:\\Users\\Ricky\\repos\\SDRM\\Views\\UserView\\Form.cshtml",
+      "TargetPath": "Views\\UserView\\Form.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -15634,8 +15634,8 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\Ricky\\repos\\SDRM\\Views\\UserView\\Login.cshtml",
-      "TargetPath": "Views\\UserView\\Login.cshtml",
+      "FilePath": "c:\\Users\\Ricky\\repos\\SDRM\\Views\\RoadMapView\\Error.cshtml",
+      "TargetPath": "Views\\RoadMapView\\Error.cshtml",
       "FileKind": "mvc"
     }
   ],

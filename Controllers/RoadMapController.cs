@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using SDRM.Models;
 using SDRM.Data;
@@ -16,9 +17,12 @@ namespace SDRM.Controllers{
     [ApiController]
     [Route("[controller]")]
     public class RoadMapController  :   ControllerBase{
+        private readonly ILogger<RoadMapViewController> _logger;
         private readonly RoadMapItemContext _context;
 
-        public RoadMapController (RoadMapItemContext context){
+        public RoadMapController (RoadMapItemContext context,
+                                  ILogger<RoadMapViewController> logger){
+            _logger = logger;
             _context = context;
         }
 

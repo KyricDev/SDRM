@@ -55,5 +55,5 @@ C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\Npgsql.dll
 C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\Humanizer.dll
 C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
-C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\Razor\Views\UserView\Login.cshtml.g.cs
-C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\Razor\Views\UserView\Register.cshtml.g.cs
+C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\Razor\Views\RoadMapView\Error.cshtml.g.cs
+C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\Razor\Views\UserView\Form.cshtml.g.cs

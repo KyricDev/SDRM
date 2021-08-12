@@ -73,15 +73,25 @@ export var FormField = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
+            var field = void 0;
+
+            if (this.state.field == "username") {
+                field = "Username";
+            } else if (this.state.field == "password") {
+                field = "Password";
+            } else if (this.state.field == "confirmpassword") {
+                field = "Confirm Password";
+            }
+
             return React.createElement(
                 "div",
                 null,
                 React.createElement(
                     "label",
                     null,
-                    this.state.field
+                    field
                 ),
-                React.createElement("input", { type: "text", name: this.state.field, onChange: this.updateField }),
+                React.createElement("input", { type: "text", name: field, onChange: this.updateField }),
                 React.createElement(
                     "p",
                     null,

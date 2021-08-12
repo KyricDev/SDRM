@@ -3,14 +3,20 @@ import { FormField } from "/js/script.js";
 class RegisterForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {username: "", password: ""};
+        this.state = {username: "", 
+                      password: "", 
+                      confirmpassword: ""
+        };
     }
     updateField(field, e){
         if (field == "username"){
             this.setState({username: e});
         }
-        else{
+        else if (field == "password"){
             this.setState({password: e});
+        }
+        else if (field == "confirmpassword"){
+            this.setState({confirmpassword: e});
         }
     }
     render() {
@@ -20,6 +26,7 @@ class RegisterForm extends React.Component {
                 <form method="Post" action="/User/Register">
                     <FormField field="username" updateField={this.updateField.bind(this, "username")} />
                     <FormField field="password" updateField={this.updateField.bind(this, "password")} />
+                    <FormField field="confirmpassword" updateField={this.updateField.bind(this, "confirmpassword")} />
                     <button>Submit</button>
                 </form>
             </div>

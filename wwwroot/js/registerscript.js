@@ -16,7 +16,10 @@ var RegisterForm = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (RegisterForm.__proto__ || Object.getPrototypeOf(RegisterForm)).call(this, props));
 
-        _this.state = { username: "", password: "" };
+        _this.state = { username: "",
+            password: "",
+            confirmpassword: ""
+        };
         return _this;
     }
 
@@ -25,8 +28,10 @@ var RegisterForm = function (_React$Component) {
         value: function updateField(field, e) {
             if (field == "username") {
                 this.setState({ username: e });
-            } else {
+            } else if (field == "password") {
                 this.setState({ password: e });
+            } else if (field == "confirmpassword") {
+                this.setState({ confirmpassword: e });
             }
         }
     }, {
@@ -45,6 +50,7 @@ var RegisterForm = function (_React$Component) {
                     { method: "Post", action: "/User/Register" },
                     React.createElement(FormField, { field: "username", updateField: this.updateField.bind(this, "username") }),
                     React.createElement(FormField, { field: "password", updateField: this.updateField.bind(this, "password") }),
+                    React.createElement(FormField, { field: "confirmpassword", updateField: this.updateField.bind(this, "confirmpassword") }),
                     React.createElement(
                         "button",
                         null,

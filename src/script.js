@@ -48,10 +48,22 @@ export class FormField extends React.Component {
         this.setState({value: e.target.value}, () => this.props.updateField(this.state.value));
     }
     render() {
+        let field;
+
+        if (this.state.field == "username"){
+            field = "Username";
+        }
+        else if (this.state.field == "password"){
+            field = "Password";
+        }
+        else if (this.state.field == "confirmpassword"){
+            field = "Confirm Password";
+        }
+
         return (
             <div>
-                <label>{this.state.field}</label>
-                <input type="text" name={this.state.field} onChange={this.updateField}></input>
+                <label>{field}</label>
+                <input type="text" name={field} onChange={this.updateField}></input>
                 <p>{this.state.value}</p>
             </div>
         )

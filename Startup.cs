@@ -55,13 +55,17 @@ namespace SDRM
             })
                 .AddEntityFrameworkStores<ApplicationUserContext>()
                 .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options => {
+                options.Cookie.Name = "Cookie";
+            });
             
             services.AddAuthentication(option => {
                 option.DefaultScheme = "DefaultCookie";
             })
-                    .AddCookie("DefaultCookie", options => {
-                        options.Cookie.Name = "Default";
-                    });
+                .AddCookie("DefaultCookie", options => {
+                    options.Cookie.Name = "Default";
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
