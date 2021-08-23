@@ -44,7 +44,7 @@ var LoginForm = function (_React$Component) {
         value: function submit() {
             var _this2 = this;
 
-            fetch("https://localhost:5001/User/LoginUser", {
+            fetch("https://localhost:5001/api/User/LoginUser", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -175,7 +175,7 @@ var RegisterForm = function (_React$Component2) {
         value: function submit() {
             var _this4 = this;
 
-            fetch("https://localhost:5001/User/RegisterUser", {
+            fetch("https://localhost:5001/api/User/RegisterUser", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

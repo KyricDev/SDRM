@@ -15632,16 +15632,6 @@
       "FilePath": "c:\\Users\\Ricky\\repos\\SDRM\\Views\\UserView\\Form.cshtml",
       "TargetPath": "Views\\UserView\\Form.cshtml",
       "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\Ricky\\repos\\SDRM\\Views\\RoadMapView\\Index.cshtml",
-      "TargetPath": "Views\\RoadMapView\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Users\\Ricky\\repos\\SDRM\\Views\\RoadMapView\\Error.cshtml",
-      "TargetPath": "Views\\RoadMapView\\Error.cshtml",
-      "FileKind": "mvc"
     }
   ],
   "SerializationFormat": "0.2"

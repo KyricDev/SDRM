@@ -12,7 +12,7 @@ using SDRM.Data;
 
 namespace SDRM.Controllers{
     [ApiController]
-    [Route("User")]
+    [Route("/api/[controller]")]
     public class UserController : ControllerBase{
         private readonly ILogger<UserController> _logger;
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -110,6 +110,7 @@ namespace SDRM.Controllers{
             _logger.LogInformation("unable to add item");
             return BadRequest();
         }
+        
 
         [AllowAnonymous]
         [HttpPost("LoginUser")]

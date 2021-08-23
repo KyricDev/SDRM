@@ -24,7 +24,7 @@ class LoginForm extends React.Component {
         }
     }
     submit(){
-        fetch("https://localhost:5001/User/LoginUser", {
+        fetch("https://localhost:5001/api/User/LoginUser", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -134,7 +134,7 @@ class RegisterForm extends React.Component {
         }
     }
     submit(){
-        fetch("https://localhost:5001/User/RegisterUser", {
+        fetch("https://localhost:5001/api/User/RegisterUser", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
