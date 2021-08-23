@@ -1,4 +1,6 @@
-import { FormField } from "/js/script.js";
+import { FormField } from "/script.js";
+
+// LoginForm using Login API
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -7,9 +9,7 @@ class LoginForm extends React.Component {
                       password: "", 
                       data: {
                           id: 0,
-                          title: "",
-                          content: "", 
-                          isComplete: "",
+                          username: "",
                           status: ""
                       }
                     };
@@ -24,18 +24,37 @@ class LoginForm extends React.Component {
         }
     }
     submit(){
-        fetch("https://localhost:5001/User/login:username=" + this.state.username + 
-                "password=" + this.state.password
-        )
+        fetch("https://localhost:5001/User/LoginUser", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                username: this.state.username, 
+                password: this.state.password 
+            })
+        })
             .then(response => response.json())
             .then(info => {
                 console.log(info);
                 this.setState({data: info});
-            });
+            })
+            .then(() => {
+                console.log("Pre status check . . .")
+                console.log(this.state.data.status);
+
+                if (this.state.data.status == 200){
+                    console.log("Login Success. Routing . . .");
+                    window.location.assign("https://localhost:5001/UserView/Dashboard");
+                }
+            })
     }
     render() {
         return(
             <div>
+                {this.state.data.id}
+                {this.state.data.username}
+                {this.state.data.status}
                 <FormField field="username" updateField={this.updateField.bind(this, "username")}/>
                 <FormField field="password" updateField={this.updateField.bind(this, "password")}/>
                 <button onClick={this.submit}>Submit</button>
@@ -44,6 +63,52 @@ class LoginForm extends React.Component {
     }
 }
 
+// LoginForm using MVC
+/*
+class LoginForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {username: "", 
+                      password: ""
+                     };
+    }
+    updateField(field, e){
+        if (field == "username"){
+            this.setState({username: e});
+        }
+        else if (field == "password"){
+            this.setState({password: e});
+        }
+    }
+    render() {
+        console.log(this.state.username + " | " + this.state.password);
+
+        if (this.state.username == "" || this.state.password == ""){
+            return(
+                <div>
+                    <form method="POST" action="LoginUser" controller="UserView">
+                        <FormField field="username" updateField={this.updateField.bind(this, "username")}/>
+                        <FormField field="password" updateField={this.updateField.bind(this, "password")}/>
+                        <button disabled>Submit</button>
+                    </form>
+                    A Field is Empty
+                </div>
+            )
+        }
+        else{
+            return(
+                <div>
+                    <form method="POST" action="LoginUser" controller="UserView">
+                        <FormField field="username" updateField={this.updateField.bind(this, "username")}/>
+                        <FormField field="password" updateField={this.updateField.bind(this, "password")}/>
+                        <button >Submit</button>
+                    </form>
+                </div>
+            )
+        }
+    }
+}
+*/
 class RegisterForm extends React.Component {
     constructor(props) {
         super(props);

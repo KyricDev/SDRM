@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using System.Collections.Generic;
 
 namespace SDRM.Models{
     public class ApplicationUser : IdentityUser{
@@ -6,7 +7,6 @@ namespace SDRM.Models{
             this.UserName = username;
         }
         public ApplicationUser(){
-            
         }
     }
 }

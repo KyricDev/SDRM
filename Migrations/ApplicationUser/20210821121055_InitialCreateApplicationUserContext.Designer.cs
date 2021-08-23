@@ -10,8 +10,8 @@ using SDRM.Data;
 namespace SDRM.Migrations.ApplicationUser
 {
     [DbContext(typeof(ApplicationUserContext))]
-    [Migration("20210725072250_CreateApplicationsUsersDBSet")]
-    partial class CreateApplicationsUsersDBSet
+    [Migration("20210821121055_InitialCreateApplicationUserContext")]
+    partial class InitialCreateApplicationUserContext
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

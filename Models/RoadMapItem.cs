@@ -1,4 +1,5 @@
 using System;
+using SDRM.Models;
 
 namespace SDRM.Models{
     public class RoadMapItem{
@@ -6,5 +7,7 @@ namespace SDRM.Models{
         public string Title { get; set; }
         public string Content { get; set; }
         public bool IsComplete { get; set; }
+        public string UserID { get; set; }
+        public User User { get; set; }
     }
 }

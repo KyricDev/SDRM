@@ -5,7 +5,7 @@ using SDRM.Models;
 
 namespace SDRM.Data{
     public class ApplicationUserContext : IdentityDbContext{
-        public ApplicationUserContext(DbContextOptions options) : base(options){
+        public ApplicationUserContext(DbContextOptions<ApplicationUserContext> options) : base(options){
 
         }
         public DbSet<ApplicationUser> ApplicationUsers {get; set;}

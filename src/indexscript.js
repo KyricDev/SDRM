@@ -10,5 +10,5 @@ class IndexRoot extends React.Component {
 
 ReactDOM.render(
     <IndexRoot />,
-    document.getElementById("root")
+    document.getElementById("FormRoot")
 )

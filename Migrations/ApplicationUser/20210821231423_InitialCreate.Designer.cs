@@ -10,8 +10,8 @@ using SDRM.Data;
 namespace SDRM.Migrations.ApplicationUser
 {
     [DbContext(typeof(ApplicationUserContext))]
-    [Migration("20210725074745_CreateApplicationsUsersDBSetPublicAgain")]
-    partial class CreateApplicationsUsersDBSetPublicAgain
+    [Migration("20210821231423_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -83,6 +83,10 @@ namespace SDRM.Migrations.ApplicationUser
                         .IsConcurrencyToken()
                         .HasColumnType("text");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
@@ -133,6 +137,8 @@ namespace SDRM.Migrations.ApplicationUser
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -213,6 +219,13 @@ namespace SDRM.Migrations.ApplicationUser
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("SDRM.Models.ApplicationUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace SDRM.Migrations.ApplicationUser
+namespace SDRM.Migrations
 {
-    public partial class CreateApplicationsUsers : Migration
+    public partial class AddUserIDtoRoadMapItem : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

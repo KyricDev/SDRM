@@ -6,7 +6,9 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-import { FormField } from "/js/script.js";
+import { FormField } from "/script.js";
+
+// LoginForm using Login API
 
 var LoginForm = function (_React$Component) {
     _inherits(LoginForm, _React$Component);
@@ -20,9 +22,7 @@ var LoginForm = function (_React$Component) {
             password: "",
             data: {
                 id: 0,
-                title: "",
-                content: "",
-                isComplete: "",
+                username: "",
                 status: ""
             }
         };
@@ -44,11 +44,28 @@ var LoginForm = function (_React$Component) {
         value: function submit() {
             var _this2 = this;
 
-            fetch("https://localhost:5001/User/login:username=" + this.state.username + "password=" + this.state.password).then(function (response) {
+            fetch("https://localhost:5001/User/LoginUser", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username: this.state.username,
+                    password: this.state.password
+                })
+            }).then(function (response) {
                 return response.json();
             }).then(function (info) {
                 console.log(info);
                 _this2.setState({ data: info });
+            }).then(function () {
+                console.log("Pre status check . . .");
+                console.log(_this2.state.data.status);
+
+                if (_this2.state.data.status == 200) {
+                    console.log("Login Success. Routing . . .");
+                    window.location.assign("https://localhost:5001/UserView/Dashboard");
+                }
             });
         }
     }, {
@@ -57,6 +74,9 @@ var LoginForm = function (_React$Component) {
             return React.createElement(
                 "div",
                 null,
+                this.state.data.id,
+                this.state.data.username,
+                this.state.data.status,
                 React.createElement(FormField, { field: "username", updateField: this.updateField.bind(this, "username") }),
                 React.createElement(FormField, { field: "password", updateField: this.updateField.bind(this, "password") }),
                 React.createElement(
@@ -70,6 +90,54 @@ var LoginForm = function (_React$Component) {
 
     return LoginForm;
 }(React.Component);
+
+// LoginForm using MVC
+/*
+class LoginForm extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {username: "", 
+                      password: ""
+                     };
+    }
+    updateField(field, e){
+        if (field == "username"){
+            this.setState({username: e});
+        }
+        else if (field == "password"){
+            this.setState({password: e});
+        }
+    }
+    render() {
+        console.log(this.state.username + " | " + this.state.password);
+
+        if (this.state.username == "" || this.state.password == ""){
+            return(
+                <div>
+                    <form method="POST" action="LoginUser" controller="UserView">
+                        <FormField field="username" updateField={this.updateField.bind(this, "username")}/>
+                        <FormField field="password" updateField={this.updateField.bind(this, "password")}/>
+                        <button disabled>Submit</button>
+                    </form>
+                    A Field is Empty
+                </div>
+            )
+        }
+        else{
+            return(
+                <div>
+                    <form method="POST" action="LoginUser" controller="UserView">
+                        <FormField field="username" updateField={this.updateField.bind(this, "username")}/>
+                        <FormField field="password" updateField={this.updateField.bind(this, "password")}/>
+                        <button >Submit</button>
+                    </form>
+                </div>
+            )
+        }
+    }
+}
+*/
+
 
 var RegisterForm = function (_React$Component2) {
     _inherits(RegisterForm, _React$Component2);

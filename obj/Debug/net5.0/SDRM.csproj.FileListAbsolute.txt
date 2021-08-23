@@ -57,3 +57,7 @@ C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\Humanizer.dll
 C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll
 C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\Razor\Views\RoadMapView\Error.cshtml.g.cs
 C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\Razor\Views\UserView\Form.cshtml.g.cs
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\Microsoft.AspNetCore.Authorization.dll
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\Microsoft.AspNetCore.Metadata.dll
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\Microsoft.AspNetCore.SpaServices.Extensions.dll
+C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\Razor\Views\UserView\Dashboard.cshtml.g.cs

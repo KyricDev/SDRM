@@ -6,43 +6,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-/*
-class Root extends React.Component{
-    constructor(props){
-        super(props);
-        this.state = {content: ""};
-    }
-
-    componentDidMount(){
-        fetch('https://localhost:5001/RoadMap/1')
-        .then(response => response.json())
-        .then(data => {
-                this.setState({content: data});
-                console.log("Starting log . . .");
-                console.log(data);
-                console.log(data.title);
-                console.log("Ending log . . .");
-            })
-    }
-
-    render(){
-        return(
-            <div>
-                <h1>Title: {this.state.content.title}</h1> 
-                <h2>
-                    Content: {this.state.content.content}
-                </h2>
-            </div>
-        )
-    }
-}
-
-ReactDOM.render(
-    <Root />,
-    document.getElementById("root")
-)
-*/
-
 export var FormField = function (_React$Component) {
     _inherits(FormField, _React$Component);
 

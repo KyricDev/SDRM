@@ -2,7 +2,7 @@
 
 namespace SDRM.Migrations
 {
-    public partial class AddApplicationUser : Migration
+    public partial class AddUsertoRoadMapItems : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -6,27 +6,48 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var IndexRoot = function (_React$Component) {
-    _inherits(IndexRoot, _React$Component);
+var DashboardRoot = function (_React$Component) {
+    _inherits(DashboardRoot, _React$Component);
 
-    function IndexRoot() {
-        _classCallCheck(this, IndexRoot);
+    function DashboardRoot(props) {
+        _classCallCheck(this, DashboardRoot);
 
-        return _possibleConstructorReturn(this, (IndexRoot.__proto__ || Object.getPrototypeOf(IndexRoot)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (DashboardRoot.__proto__ || Object.getPrototypeOf(DashboardRoot)).call(this, props));
+
+        _this.state = {
+            data: {
+                username: ""
+            }
+        };
+        return _this;
     }
 
-    _createClass(IndexRoot, [{
+    _createClass(DashboardRoot, [{
+        key: "componentDidMount",
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            fetch("https://localhost:5001/User/FindUser").then(function (response) {
+                return response.json();
+            }).then(function (info) {
+                console.log(info);
+                _this2.setState({ data: info });
+            }).then(function () {
+                fetch("https://localhost:5001/User/AddRoadMapItem");
+            });
+        }
+    }, {
         key: "render",
         value: function render() {
             return React.createElement(
                 "div",
                 null,
-                "This is Working"
+                this.state.data.username
             );
         }
     }]);
 
-    return IndexRoot;
+    return DashboardRoot;
 }(React.Component);
 
-ReactDOM.render(React.createElement(IndexRoot, null), document.getElementById("FormRoot"));
+ReactDOM.render(React.createElement(DashboardRoot, null), document.getElementById("root"));

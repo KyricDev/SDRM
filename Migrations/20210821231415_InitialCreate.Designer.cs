@@ -8,9 +8,9 @@ using SDRM.Data;
 
 namespace SDRM.Migrations
 {
-    [DbContext(typeof(RoadMapItemContext))]
-    [Migration("20210721113524_AddApplicationUser")]
-    partial class AddApplicationUser
+    [DbContext(typeof(UserContext))]
+    [Migration("20210821231415_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -36,9 +36,42 @@ namespace SDRM.Migrations
                     b.Property<string>("Title")
                         .HasColumnType("text");
 
+                    b.Property<string>("UserID")
+                        .HasColumnType("text");
+
                     b.HasKey("ID");
 
+                    b.HasIndex("UserID");
+
                     b.ToTable("RoadMapItems");
+                });
+
+            modelBuilder.Entity("SDRM.Models.User", b =>
+                {
+                    b.Property<string>("ID")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("text");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("SDRM.Models.RoadMapItem", b =>
+                {
+                    b.HasOne("SDRM.Models.User", null)
+                        .WithMany("RoadMapItems")
+                        .HasForeignKey("UserID");
+                });
+
+            modelBuilder.Entity("SDRM.Models.User", b =>
+                {
+                    b.Navigation("RoadMapItems");
                 });
 #pragma warning restore 612, 618
         }

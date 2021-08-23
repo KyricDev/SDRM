@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -35,6 +36,9 @@ namespace SDRM
             services.AddControllers();
             services.AddControllersWithViews();
             services.AddLogging();
+            services.AddSpaStaticFiles(option => {
+                option.RootPath = "wwwroot/js";
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SDRM", Version = "v1" });
@@ -44,6 +48,9 @@ namespace SDRM
             );
             services.AddDbContext<ApplicationUserContext>(options => 
                 options.UseNpgsql(Configuration.GetConnectionString("ApplicationUserContext"))
+            );
+            services.AddDbContext<UserContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("UserContext"))
             );
             services.AddIdentity<ApplicationUser, IdentityRole>(options => {
                 options.Password.RequireDigit = false;
@@ -58,14 +65,23 @@ namespace SDRM
 
             services.ConfigureApplicationCookie(options => {
                 options.Cookie.Name = "Cookie";
+                options.LoginPath = "/";
+                options.ReturnUrlParameter = "/";
             });
-            
+            /*
             services.AddAuthentication(option => {
                 option.DefaultScheme = "DefaultCookie";
             })
                 .AddCookie("DefaultCookie", options => {
                     options.Cookie.Name = "Default";
                 });
+            */
+            services.AddAuthorization(option => {
+                option.FallbackPolicy = new AuthorizationPolicyBuilder()
+                                                .RequireAuthenticatedUser()
+                                                .Build();
+            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,13 +95,13 @@ namespace SDRM
             }
 
             app.UseHttpsRedirection();
+            app.UseSpaStaticFiles();
 
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseStaticFiles();
-            app.UseDefaultFiles();
+            //app.UseDefaultFiles();
 
             app.UseEndpoints(endpoints =>
             {

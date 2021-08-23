@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using SDRM.Models;
 using SDRM.Data;
@@ -29,7 +30,7 @@ namespace SDRM.Controllers{
         [HttpGet]
         [Route("Index")]
         public async Task<IActionResult> Index(){
-            var user = await _userManager.Users.Where(i => i.UserName == "useradmin").FirstOrDefaultAsync();
+            var user = await _userManager.Users.Where(i => i.UserName == "Janneane").FirstOrDefaultAsync();
             ViewBag.Username = user.UserName;
             ViewBag.Password = user.PasswordHash;
 
