@@ -17,8 +17,14 @@ class GoalContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            list:{
-            }
+            list:[{
+                content: "",
+                id: "",
+                isComplete: "",
+                title: "",
+                user: "",
+                userID: ""
+            }]
         };
     }
     componentDidMount(){
@@ -30,9 +36,22 @@ class GoalContainer extends React.Component {
                 })
     }
     render() {
+        let object = this.state.list.map( (list) =>  
+            <div key={list.id}>
+                {list.id}
+                <br />
+                {list.title} 
+                <br />
+                {list.content}
+                <br />
+                <br />
+            </div>
+        );
+
         return(
             <div>
-
+                Object: 
+                {object}
             </div>
         )
     }

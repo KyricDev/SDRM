@@ -61,7 +61,14 @@ var GoalContainer = function (_React$Component2) {
         var _this2 = _possibleConstructorReturn(this, (GoalContainer.__proto__ || Object.getPrototypeOf(GoalContainer)).call(this, props));
 
         _this2.state = {
-            list: {}
+            list: [{
+                content: "",
+                id: "",
+                isComplete: "",
+                title: "",
+                user: "",
+                userID: ""
+            }]
         };
         return _this2;
     }
@@ -81,7 +88,26 @@ var GoalContainer = function (_React$Component2) {
     }, {
         key: "render",
         value: function render() {
-            return React.createElement("div", null);
+            var object = this.state.list.map(function (list) {
+                return React.createElement(
+                    "div",
+                    { key: list.id },
+                    list.id,
+                    React.createElement("br", null),
+                    list.title,
+                    React.createElement("br", null),
+                    list.content,
+                    React.createElement("br", null),
+                    React.createElement("br", null)
+                );
+            });
+
+            return React.createElement(
+                "div",
+                null,
+                "Object:",
+                object
+            );
         }
     }]);
 
