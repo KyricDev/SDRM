@@ -50,14 +50,16 @@ class LoginForm extends React.Component {
             })
     }
     render() {
+        let button = <button onClick={this.submit}>Submit</button>;
+        if (this.state.username == "" || this.state.password == ""){
+            button = <button onClick={this.submit} disabled>Submit</button>
+        }
+
         return(
             <div>
-                {this.state.data.id}
-                {this.state.data.username}
-                {this.state.data.status}
                 <FormField field="username" updateField={this.updateField.bind(this, "username")}/>
                 <FormField field="password" updateField={this.updateField.bind(this, "password")}/>
-                <button onClick={this.submit}>Submit</button>
+                {button}
             </div>
         )
     }

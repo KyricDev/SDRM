@@ -71,19 +71,25 @@ var LoginForm = function (_React$Component) {
     }, {
         key: "render",
         value: function render() {
+            var button = React.createElement(
+                "button",
+                { onClick: this.submit },
+                "Submit"
+            );
+            if (this.state.username == "" || this.state.password == "") {
+                button = React.createElement(
+                    "button",
+                    { onClick: this.submit, disabled: true },
+                    "Submit"
+                );
+            }
+
             return React.createElement(
                 "div",
                 null,
-                this.state.data.id,
-                this.state.data.username,
-                this.state.data.status,
                 React.createElement(FormField, { field: "username", updateField: this.updateField.bind(this, "username") }),
                 React.createElement(FormField, { field: "password", updateField: this.updateField.bind(this, "password") }),
-                React.createElement(
-                    "button",
-                    { onClick: this.submit },
-                    "Submit"
-                )
+                button
             );
         }
     }]);
