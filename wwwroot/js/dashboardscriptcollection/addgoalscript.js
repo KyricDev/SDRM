@@ -70,7 +70,8 @@ export var AddGoalContainer = function (_React$Component3) {
 
         _this3.state = {
             title: "",
-            description: ""
+            description: "",
+            status: 0
         };
         _this3.updateTitle = _this3.updateTitle.bind(_this3);
         _this3.updateDescription = _this3.updateDescription.bind(_this3);4;
@@ -81,17 +82,19 @@ export var AddGoalContainer = function (_React$Component3) {
     _createClass(AddGoalContainer, [{
         key: "updateTitle",
         value: function updateTitle(e) {
-            this.setState({ title: e });
+            this.setState({ title: e, status: 0 });
         }
     }, {
         key: "updateDescription",
         value: function updateDescription(e) {
-            this.setState({ description: e });
+            this.setState({ description: e, status: 0 });
         }
     }, {
         key: "submit",
         value: function submit(e) {
-            fetch("https://localhost:5001/api/User/AddRoadMapItem", {
+            var _this4 = this;
+
+            fetch("https://localhost:5001/api/RoadMapItem/AddRoadMapItem", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -103,12 +106,19 @@ export var AddGoalContainer = function (_React$Component3) {
             }).then(function (response) {
                 return response.json();
             }).then(function (data) {
-                return console.log(data);
+                console.log(data);
+                _this4.setState({ status: data });
             });
         }
     }, {
         key: "render",
         value: function render() {
+            var status = "";
+
+            if (this.state.status == 200) {
+                status = "Goal Added" + " " + this.state.title;
+            }
+
             return React.createElement(
                 "div",
                 null,
@@ -121,7 +131,9 @@ export var AddGoalContainer = function (_React$Component3) {
                     "button",
                     { type: "submit", onClick: this.submit },
                     "Submit"
-                )
+                ),
+                React.createElement("br", null),
+                status
             );
         }
     }]);

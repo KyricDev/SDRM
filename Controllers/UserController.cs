@@ -29,11 +29,6 @@ namespace SDRM.Controllers{
             _userContext = userContext;
         }
 
-        public class Item{
-            public string title { get; set; }
-            public string description { get; set; }
-        }
-
         public class Form{
             public string username { get; set; }
             public string password { get; set; }
@@ -79,45 +74,6 @@ namespace SDRM.Controllers{
             _logger.LogInformation("user not found");
             return BadRequest();
         }
-
-        [HttpPost("AddRoadMapItem")]
-        public async Task<ActionResult> AddRoadMapItem(Item item){
-            return Ok();
-            _logger.LogInformation($"Get: AddRoadMapItem");
-            _logger.LogInformation($"{item.title}: {item.description}");
-
-            var claim = HttpContext.User.Claims.Where(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").SingleOrDefault();
-            var userID = claim.Value;
-
-            _logger.LogInformation($"ID Found: {userID}");
-            var user = await _userContext.Users.Where(u => u.ID == userID).SingleOrDefaultAsync();
-
-            RoadMapItem roadMapItem = new RoadMapItem(){
-                Title = item.title,
-                Content = item.description,
-                IsComplete = false
-            };
-
-            user.RoadMapItems.Add(roadMapItem);
-            var items = user.RoadMapItems.ToList();
-            
-            foreach (RoadMapItem i in items){
-                _logger.LogInformation($"{i.ID}");
-                _logger.LogInformation($"{i.Title}: {i.Content}");
-            }
-
-            _userContext.RoadMapItems.Add(roadMapItem);
-            var result = await _userContext.SaveChangesAsync();
-
-            if (result > 0){
-                _logger.LogInformation($"Item Added");
-                return Ok();
-            }
-
-            _logger.LogInformation("unable to add item");
-            return BadRequest();
-        }
-        
 
         [AllowAnonymous]
         [HttpPost("LoginUser")]

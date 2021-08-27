@@ -34,19 +34,20 @@ export class AddGoalContainer extends React.Component {
         this.state = {
             title: "",
             description: "",
+            status: 0 
         };
         this.updateTitle = this.updateTitle.bind(this);
         this.updateDescription = this.updateDescription.bind(this);4
         this.submit = this.submit.bind(this);
     }
     updateTitle(e){
-        this.setState({title: e});
+        this.setState({title: e, status: 0});
     }
     updateDescription(e){
-        this.setState({description: e});
+        this.setState({description: e, status: 0});
     }
     submit(e){
-        fetch("https://localhost:5001/api/User/AddRoadMapItem", {
+        fetch("https://localhost:5001/api/RoadMapItem/AddRoadMapItem", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -57,9 +58,18 @@ export class AddGoalContainer extends React.Component {
             })
         })
             .then(response => response.json())
-            .then(data => console.log(data));
+            .then(data => {
+                console.log(data);
+                this.setState({status: data});
+            });
     }
     render(){
+        let status = "";
+
+        if (this.state.status == 200){
+            status = "Goal Added" + " " + this.state.title;
+        }
+
         return(
             <div>
                 <GoalTitle title={this.updateTitle} />
@@ -68,6 +78,8 @@ export class AddGoalContainer extends React.Component {
                 <GoalContent description={this.updateDescription} />
                 <br />
                 <button type="submit" onClick={this.submit}>Submit</button>
+                <br />
+                {status}
             </div>
     )
     }
