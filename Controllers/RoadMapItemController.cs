@@ -29,8 +29,10 @@ namespace SDRM.Controllers{
         }
 
         public class Item{
+            public int id { get; set; }
             public string title { get; set; }
             public string description { get; set; }
+            public bool isComplete { get; set; }
         }
 
         [HttpGet]
@@ -62,7 +64,7 @@ namespace SDRM.Controllers{
 
         [HttpPost("AddRoadMapItem")]
         public async Task<ActionResult> AddRoadMapItem(Item item){
-            _logger.LogInformation($"Get: AddRoadMapItem");
+            _logger.LogInformation($"Post: AddRoadMapItem");
             _logger.LogInformation($"{item.title}: {item.description}");
 
             var claim = HttpContext.User.Claims.Where(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").SingleOrDefault();
@@ -71,8 +73,6 @@ namespace SDRM.Controllers{
             _logger.LogInformation($"ID Found: {userID}");
             var user = await _userContext.Users.Where(u => u.ID == userID).SingleOrDefaultAsync();
 
-            
-
             RoadMapItem roadMapItem = new RoadMapItem(){
                 Title = item.title,
                 Content = item.description,
@@ -80,8 +80,6 @@ namespace SDRM.Controllers{
             };
 
             user.RoadMapItems.Add(roadMapItem);
-            var items = user.RoadMapItems.ToList();
-
             _userContext.RoadMapItems.Add(roadMapItem);
             var result = await _userContext.SaveChangesAsync();
 
@@ -91,6 +89,28 @@ namespace SDRM.Controllers{
             }
 
             _logger.LogInformation("unable to add item");
+            return BadRequest();
+        }
+        [HttpPost("DeleteRoadMapItem")]
+        public async Task<ActionResult> DeleteRoadMapItem(Item item){
+            _logger.LogInformation($"Post: DeleteRoadMapItem");
+            _logger.LogInformation($"{item.id} - {item.title}: {item.description}");
+
+            var claim = HttpContext.User.Claims.Where(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").SingleOrDefault();
+
+            var user = await _userContext.Users.Where(u => u.ID == claim.Value).SingleOrDefaultAsync();
+            var targetItem = await _userContext.RoadMapItems.Where(i => i.ID == item.id).SingleOrDefaultAsync(); 
+
+            user.RoadMapItems.Remove(targetItem);
+            _userContext.RoadMapItems.Remove(targetItem);
+            var result = await _userContext.SaveChangesAsync();
+
+            if (result > 0){
+                _logger.LogInformation($"{item.id}: {item.title} - Successfully Deleted");
+                return Ok(200);
+            }
+            
+            _logger.LogInformation($"Failed to Deleete Item");
             return BadRequest();
         }
     }

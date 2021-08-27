@@ -97,54 +97,6 @@ var LoginForm = function (_React$Component) {
     return LoginForm;
 }(React.Component);
 
-// LoginForm using MVC
-/*
-class LoginForm extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {username: "", 
-                      password: ""
-                     };
-    }
-    updateField(field, e){
-        if (field == "username"){
-            this.setState({username: e});
-        }
-        else if (field == "password"){
-            this.setState({password: e});
-        }
-    }
-    render() {
-        console.log(this.state.username + " | " + this.state.password);
-
-        if (this.state.username == "" || this.state.password == ""){
-            return(
-                <div>
-                    <form method="POST" action="LoginUser" controller="UserView">
-                        <FormField field="username" updateField={this.updateField.bind(this, "username")}/>
-                        <FormField field="password" updateField={this.updateField.bind(this, "password")}/>
-                        <button disabled>Submit</button>
-                    </form>
-                    A Field is Empty
-                </div>
-            )
-        }
-        else{
-            return(
-                <div>
-                    <form method="POST" action="LoginUser" controller="UserView">
-                        <FormField field="username" updateField={this.updateField.bind(this, "username")}/>
-                        <FormField field="password" updateField={this.updateField.bind(this, "password")}/>
-                        <button >Submit</button>
-                    </form>
-                </div>
-            )
-        }
-    }
-}
-*/
-
-
 var RegisterForm = function (_React$Component2) {
     _inherits(RegisterForm, _React$Component2);
 
