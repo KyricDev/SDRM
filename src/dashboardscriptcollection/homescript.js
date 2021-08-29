@@ -2,16 +2,14 @@ export class GoalContainer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            list:[/*{
+            list:[{
                 content: "",
                 id: "",
                 isComplete: "",
                 title: "",
                 user: "",
                 userID: ""
-            }*/
-            ]
-            ,
+            }],
             isdeletegoal: false
         };
     }
@@ -26,50 +24,38 @@ export class GoalContainer extends React.Component {
             })
         })
             .then(response => response.json())
-            .then(data => console.log(data));
+            .then(data => console.log(data))
+                .then(() => {
+                    fetch("https://localhost:5001/api/RoadMapItem/GetRoadMapItems")
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("Data:");
+                            console.log(data);
+                            this.setState({list: data}, () => console.log(this.state.list));
+                        });
+                });
     }
     componentDidMount(){
-        console.log("DidMount");        
-        fetch("https://localhost:5001/api/RoadMapItem/GetRoadMapItems")
-            .then(response => response.json())
-            .then(data => {
-                this.setState({list: data}, () => console.log(this.state.list));
-        });
-    }
-    componentWillUnmount(){
-        console.log("WillUnmount");
-    }
-    componentDidUpdate(prevProps, prevState) {
-        console.log("DidUpdate");
-        console.log(this.state.list);
-        console.log("props: " + this.props.isdeletegoal);
-        console.log("state: " + this.state.isdeletegoal);
-        console.log("prevProps :");
-        console.log(prevProps)
-        console.log("prevState :"); 
-        console.log(prevState)
-/*
-        let newlist;
+        console.log("DidMount");
 
         fetch("https://localhost:5001/api/RoadMapItem/GetRoadMapItems")
             .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                console.log(this.state.list);
-                newlist = data;
-            });
-        
-        if (this.state.list != newlist) {
-            this.setState({list: newlist}, () => console.log(this.state.list) );
-        }
-/*
-        if (this.state.isdeletegoal != this.props.isdeletegoal){
-            this.setState({isdeletegoal: this.props.isdeletegoal}, () => console.log(this.state.isdeletegoal));
-        }
-*/
+            .then(data => this.setState({list: data}));
+
+        console.log(this.state.list);
+    }
+    componentWillUnmount(){
+        console.log("WillUnmount");
+        console.log(this.state.list);
+    }
+    componentDidUpdate() {
+        console.log("DidUpdate");
     }
     render() {
         let object = "";
+        
+        console.log("Render:");
+        console.log(this.state.list);
 
         if (this.props.isdeletegoal){
             object = this.state.list.map( (list) =>  

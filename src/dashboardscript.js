@@ -1,6 +1,5 @@
 import {GoalContainer} from "/dashboardscriptcollection/homescript.js";
 import {AddGoalContainer} from "/dashboardscriptcollection/addgoalscript.js";
-import {DeleteGoalContainer} from "/dashboardscriptcollection/deletegoalscript.js";
 
 class NavigationLinks extends React.Component {
     constructor(props) {
@@ -41,12 +40,17 @@ class DashboardRoot extends React.Component {
         this.changeNavigation = this.changeNavigation.bind(this);
     }
     componentDidMount(){
+        console.log("Dashboard DidMount");
+
         fetch("https://localhost:5001/api/User/FindUser")
             .then(response => response.json())
             .then(info => {
                 console.log(info);
                 this.setState({data: info});
-            })
+            });
+    }
+    componentDidUpdate(){
+        console.log("Dashboard DidUpdate");
     }
     changeNavigation(e){
         this.setState({navigation: e});

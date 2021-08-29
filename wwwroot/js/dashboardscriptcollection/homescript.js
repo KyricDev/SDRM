@@ -15,16 +15,14 @@ export var GoalContainer = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (GoalContainer.__proto__ || Object.getPrototypeOf(GoalContainer)).call(this, props));
 
         _this.state = {
-            list: [/*{
-                   content: "",
-                   id: "",
-                   isComplete: "",
-                   title: "",
-                   user: "",
-                   userID: ""
-                   }*/
-            ],
-
+            list: [{
+                content: "",
+                id: "",
+                isComplete: "",
+                title: "",
+                user: "",
+                userID: ""
+            }],
             isdeletegoal: false
         };
         return _this;
@@ -33,6 +31,8 @@ export var GoalContainer = function (_React$Component) {
     _createClass(GoalContainer, [{
         key: "deleteGoal",
         value: function deleteGoal(id, e) {
+            var _this2 = this;
+
             fetch("https://localhost:5001/api/RoadMapItem/DeleteRoadMapItem", {
                 method: "POST",
                 headers: {
@@ -45,64 +45,53 @@ export var GoalContainer = function (_React$Component) {
                 return response.json();
             }).then(function (data) {
                 return console.log(data);
+            }).then(function () {
+                fetch("https://localhost:5001/api/RoadMapItem/GetRoadMapItems").then(function (response) {
+                    return response.json();
+                }).then(function (data) {
+                    console.log("Data:");
+                    console.log(data);
+                    _this2.setState({ list: data }, function () {
+                        return console.log(_this2.state.list);
+                    });
+                });
             });
         }
     }, {
         key: "componentDidMount",
         value: function componentDidMount() {
-            var _this2 = this;
+            var _this3 = this;
 
             console.log("DidMount");
+
             fetch("https://localhost:5001/api/RoadMapItem/GetRoadMapItems").then(function (response) {
                 return response.json();
             }).then(function (data) {
-                _this2.setState({ list: data }, function () {
-                    return console.log(_this2.state.list);
-                });
+                return _this3.setState({ list: data });
             });
+
+            console.log(this.state.list);
         }
     }, {
         key: "componentWillUnmount",
         value: function componentWillUnmount() {
             console.log("WillUnmount");
+            console.log(this.state.list);
         }
     }, {
         key: "componentDidUpdate",
-        value: function componentDidUpdate(prevProps, prevState) {
+        value: function componentDidUpdate() {
             console.log("DidUpdate");
-            console.log(this.state.list);
-            console.log("props: " + this.props.isdeletegoal);
-            console.log("state: " + this.state.isdeletegoal);
-            console.log("prevProps :");
-            console.log(prevProps);
-            console.log("prevState :");
-            console.log(prevState);
-            /*
-                    let newlist;
-            
-                    fetch("https://localhost:5001/api/RoadMapItem/GetRoadMapItems")
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log(data);
-                            console.log(this.state.list);
-                            newlist = data;
-                        });
-                    
-                    if (this.state.list != newlist) {
-                        this.setState({list: newlist}, () => console.log(this.state.list) );
-                    }
-            /*
-                    if (this.state.isdeletegoal != this.props.isdeletegoal){
-                        this.setState({isdeletegoal: this.props.isdeletegoal}, () => console.log(this.state.isdeletegoal));
-                    }
-            */
         }
     }, {
         key: "render",
         value: function render() {
-            var _this3 = this;
+            var _this4 = this;
 
             var object = "";
+
+            console.log("Render:");
+            console.log(this.state.list);
 
             if (this.props.isdeletegoal) {
                 object = this.state.list.map(function (list) {
@@ -113,7 +102,7 @@ export var GoalContainer = function (_React$Component) {
                         " ",
                         React.createElement(
                             "div",
-                            { onClick: _this3.deleteGoal.bind(_this3, list.id) },
+                            { onClick: _this4.deleteGoal.bind(_this4, list.id) },
                             "Delete"
                         ),
                         React.createElement("br", null),

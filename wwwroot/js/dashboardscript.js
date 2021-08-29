@@ -8,7 +8,6 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import { GoalContainer } from "/dashboardscriptcollection/homescript.js";
 import { AddGoalContainer } from "/dashboardscriptcollection/addgoalscript.js";
-import { DeleteGoalContainer } from "/dashboardscriptcollection/deletegoalscript.js";
 
 var NavigationLinks = function (_React$Component) {
     _inherits(NavigationLinks, _React$Component);
@@ -94,12 +93,19 @@ var DashboardRoot = function (_React$Component2) {
         value: function componentDidMount() {
             var _this4 = this;
 
+            console.log("Dashboard DidMount");
+
             fetch("https://localhost:5001/api/User/FindUser").then(function (response) {
                 return response.json();
             }).then(function (info) {
                 console.log(info);
                 _this4.setState({ data: info });
             });
+        }
+    }, {
+        key: "componentDidUpdate",
+        value: function componentDidUpdate() {
+            console.log("Dashboard DidUpdate");
         }
     }, {
         key: "changeNavigation",

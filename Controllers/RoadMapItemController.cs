@@ -59,6 +59,11 @@ namespace SDRM.Controllers{
 
             var roadMapItems = _userContext.RoadMapItems.Where(u => u.UserID == id).ToList();
 
+            _logger.LogInformation($"roadMapItems:");
+            foreach(RoadMapItem i in roadMapItems){
+                _logger.LogInformation($"{i.Title}: {i.Content}");
+            }
+
             return Ok(roadMapItems);
         }
 
@@ -104,6 +109,13 @@ namespace SDRM.Controllers{
             user.RoadMapItems.Remove(targetItem);
             _userContext.RoadMapItems.Remove(targetItem);
             var result = await _userContext.SaveChangesAsync();
+
+            var _Items = _userContext.RoadMapItems.Where(u => u.UserID == claim.Value).ToList();
+
+            _logger.LogInformation("_Items: ");
+            foreach (RoadMapItem i in _Items){
+                _logger.LogInformation($"{i.Title}: {i.Content}");
+            }
 
             if (result > 0){
                 _logger.LogInformation($"{item.id}: {item.title} - Successfully Deleted");
