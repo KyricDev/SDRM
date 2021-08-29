@@ -8,6 +8,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import { GoalContainer } from "/dashboardscriptcollection/homescript.js";
 import { AddGoalContainer } from "/dashboardscriptcollection/addgoalscript.js";
+import { DeleteGoalContainer } from "/dashboardscriptcollection/deletegoalscript.js";
 
 var NavigationLinks = function (_React$Component) {
     _inherits(NavigationLinks, _React$Component);
@@ -54,7 +55,7 @@ var NavigationLinks = function (_React$Component) {
                     ),
                     React.createElement(
                         "li",
-                        null,
+                        { onClick: this.changeNavigation, value: 2 },
                         "Delete Goal"
                     ),
                     React.createElement(
@@ -118,14 +119,34 @@ var DashboardRoot = function (_React$Component2) {
                         "You are in Home",
                         React.createElement(NavigationLinks, { navigation: this.changeNavigation }),
                         this.state.data.username,
-                        React.createElement(GoalContainer, null)
+                        React.createElement(GoalContainer, { isdeletegoal: false })
+                    );
+                    break;
+                case 1:
+                    return React.createElement(
+                        "div",
+                        null,
+                        "You are in AddGoal",
+                        React.createElement(NavigationLinks, { navigation: this.changeNavigation }),
+                        this.state.data.username,
+                        React.createElement(AddGoalContainer, null)
+                    );
+                    break;
+                case 2:
+                    return React.createElement(
+                        "div",
+                        null,
+                        "You are in DeleteGoal",
+                        React.createElement(NavigationLinks, { navigation: this.changeNavigation }),
+                        this.state.data.username,
+                        React.createElement(GoalContainer, { isdeletegoal: true })
                     );
                     break;
                 default:
                     return React.createElement(
                         "div",
                         null,
-                        "You are in AddGoal",
+                        "Wrong Navigation!",
                         React.createElement(NavigationLinks, { navigation: this.changeNavigation }),
                         this.state.data.username,
                         React.createElement(AddGoalContainer, null)

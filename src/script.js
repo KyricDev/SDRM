@@ -5,7 +5,7 @@ export class FormField extends React.Component {
         this.updateField = this.updateField.bind(this);
     }
     componentDidMount(){
-        this.setState({field: this.props.field});
+//        this.setState({field: this.props.field});
     }
     updateField(e){
         this.setState({value: e.target.value}, () => this.props.updateField(this.state.value));
@@ -13,13 +13,13 @@ export class FormField extends React.Component {
     render() {
         let field;
 
-        if (this.state.field == "username"){
+        if (this.props.field == "username"){
             field = "Username";
         }
-        else if (this.state.field == "password"){
+        else if (this.props.field == "password"){
             field = "Password";
         }
-        else if (this.state.field == "confirmpassword"){
+        else if (this.props.field == "confirmpassword"){
             field = "Confirm Password";
         }
 

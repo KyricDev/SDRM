@@ -22,7 +22,7 @@ export var FormField = function (_React$Component) {
     _createClass(FormField, [{
         key: "componentDidMount",
         value: function componentDidMount() {
-            this.setState({ field: this.props.field });
+            //        this.setState({field: this.props.field});
         }
     }, {
         key: "updateField",
@@ -38,11 +38,11 @@ export var FormField = function (_React$Component) {
         value: function render() {
             var field = void 0;
 
-            if (this.state.field == "username") {
+            if (this.props.field == "username") {
                 field = "Username";
-            } else if (this.state.field == "password") {
+            } else if (this.props.field == "password") {
                 field = "Password";
-            } else if (this.state.field == "confirmpassword") {
+            } else if (this.props.field == "confirmpassword") {
                 field = "Confirm Password";
             }
 

@@ -15,51 +15,135 @@ export var GoalContainer = function (_React$Component) {
         var _this = _possibleConstructorReturn(this, (GoalContainer.__proto__ || Object.getPrototypeOf(GoalContainer)).call(this, props));
 
         _this.state = {
-            list: [{
-                content: "",
-                id: "",
-                isComplete: "",
-                title: "",
-                user: "",
-                userID: ""
-            }]
+            list: [/*{
+                   content: "",
+                   id: "",
+                   isComplete: "",
+                   title: "",
+                   user: "",
+                   userID: ""
+                   }*/
+            ],
+
+            isdeletegoal: false
         };
         return _this;
     }
 
     _createClass(GoalContainer, [{
+        key: "deleteGoal",
+        value: function deleteGoal(id, e) {
+            fetch("https://localhost:5001/api/RoadMapItem/DeleteRoadMapItem", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    id: id
+                })
+            }).then(function (response) {
+                return response.json();
+            }).then(function (data) {
+                return console.log(data);
+            });
+        }
+    }, {
         key: "componentDidMount",
         value: function componentDidMount() {
             var _this2 = this;
 
+            console.log("DidMount");
             fetch("https://localhost:5001/api/RoadMapItem/GetRoadMapItems").then(function (response) {
                 return response.json();
             }).then(function (data) {
-                console.log(data);
-                _this2.setState({ list: data });
+                _this2.setState({ list: data }, function () {
+                    return console.log(_this2.state.list);
+                });
             });
+        }
+    }, {
+        key: "componentWillUnmount",
+        value: function componentWillUnmount() {
+            console.log("WillUnmount");
+        }
+    }, {
+        key: "componentDidUpdate",
+        value: function componentDidUpdate(prevProps, prevState) {
+            console.log("DidUpdate");
+            console.log(this.state.list);
+            console.log("props: " + this.props.isdeletegoal);
+            console.log("state: " + this.state.isdeletegoal);
+            console.log("prevProps :");
+            console.log(prevProps);
+            console.log("prevState :");
+            console.log(prevState);
+            /*
+                    let newlist;
+            
+                    fetch("https://localhost:5001/api/RoadMapItem/GetRoadMapItems")
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            console.log(this.state.list);
+                            newlist = data;
+                        });
+                    
+                    if (this.state.list != newlist) {
+                        this.setState({list: newlist}, () => console.log(this.state.list) );
+                    }
+            /*
+                    if (this.state.isdeletegoal != this.props.isdeletegoal){
+                        this.setState({isdeletegoal: this.props.isdeletegoal}, () => console.log(this.state.isdeletegoal));
+                    }
+            */
         }
     }, {
         key: "render",
         value: function render() {
-            var object = this.state.list.map(function (list) {
-                return React.createElement(
-                    "div",
-                    { key: list.id },
-                    list.id,
-                    React.createElement("br", null),
-                    list.title,
-                    React.createElement("br", null),
-                    list.content,
-                    React.createElement("br", null),
-                    React.createElement("br", null)
-                );
-            });
+            var _this3 = this;
+
+            var object = "";
+
+            if (this.props.isdeletegoal) {
+                object = this.state.list.map(function (list) {
+                    return React.createElement(
+                        "div",
+                        { key: list.id },
+                        list.id,
+                        " ",
+                        React.createElement(
+                            "div",
+                            { onClick: _this3.deleteGoal.bind(_this3, list.id) },
+                            "Delete"
+                        ),
+                        React.createElement("br", null),
+                        list.title,
+                        React.createElement("br", null),
+                        list.content,
+                        React.createElement("br", null),
+                        React.createElement("br", null)
+                    );
+                });
+            } else {
+                object = this.state.list.map(function (list) {
+                    return React.createElement(
+                        "div",
+                        { key: list.id },
+                        list.id,
+                        React.createElement("br", null),
+                        list.title,
+                        React.createElement("br", null),
+                        list.content,
+                        React.createElement("br", null),
+                        React.createElement("br", null)
+                    );
+                });
+            }
 
             return React.createElement(
                 "div",
                 null,
-                "Object:",
+                "Objects:",
                 object
             );
         }

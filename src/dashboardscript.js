@@ -1,5 +1,6 @@
 import {GoalContainer} from "/dashboardscriptcollection/homescript.js";
 import {AddGoalContainer} from "/dashboardscriptcollection/addgoalscript.js";
+import {DeleteGoalContainer} from "/dashboardscriptcollection/deletegoalscript.js";
 
 class NavigationLinks extends React.Component {
     constructor(props) {
@@ -20,7 +21,7 @@ class NavigationLinks extends React.Component {
                 <ul>
                     <li onClick={this.changeNavigation} value={0}>Home</li>
                     <li onClick={this.changeNavigation} value={1}>Add Goal</li>
-                    <li>Delete Goal</li>
+                    <li onClick={this.changeNavigation} value={2}>Delete Goal</li>
                     <li>Sign Out</li>
                 </ul>
             </div>
@@ -60,14 +61,34 @@ class DashboardRoot extends React.Component {
                         You are in Home
                         <NavigationLinks navigation={this.changeNavigation} />
                         {this.state.data.username}
-                        <GoalContainer />
+                        <GoalContainer isdeletegoal={false} />
                     </div>
                 )
-                break;  
-            default:
+                break;
+            case 1:
                 return(
                     <div>
                         You are in AddGoal
+                        <NavigationLinks navigation={this.changeNavigation} />
+                        {this.state.data.username}
+                        <AddGoalContainer />
+                    </div>
+                )
+                break;
+            case 2:
+                return(
+                    <div>
+                        You are in DeleteGoal
+                        <NavigationLinks navigation={this.changeNavigation} />
+                        {this.state.data.username}
+                        <GoalContainer isdeletegoal={true} />
+                    </div>
+                )   
+                break;
+            default:
+                return(
+                    <div>
+                        Wrong Navigation!
                         <NavigationLinks navigation={this.changeNavigation} />
                         {this.state.data.username}
                         <AddGoalContainer />

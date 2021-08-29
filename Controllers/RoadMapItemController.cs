@@ -94,7 +94,7 @@ namespace SDRM.Controllers{
         [HttpPost("DeleteRoadMapItem")]
         public async Task<ActionResult> DeleteRoadMapItem(Item item){
             _logger.LogInformation($"Post: DeleteRoadMapItem");
-            _logger.LogInformation($"{item.id} - {item.title}: {item.description}");
+            _logger.LogInformation($"{item.id}");
 
             var claim = HttpContext.User.Claims.Where(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier").SingleOrDefault();
 
