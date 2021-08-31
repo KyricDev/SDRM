@@ -21,6 +21,7 @@ var NavigationLinks = function (_React$Component) {
             navigation: 0
         };
         _this.changeNavigation = _this.changeNavigation.bind(_this);
+        _this.signOut = _this.signOut.bind(_this);
         return _this;
     }
 
@@ -31,6 +32,18 @@ var NavigationLinks = function (_React$Component) {
 
             this.setState({ navigation: e.target.value }, function () {
                 _this2.props.navigation(_this2.state.navigation);
+            });
+        }
+    }, {
+        key: "signOut",
+        value: function signOut() {
+            fetch("https://localhost:5001/api/User/SignOut", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(function () {
+                return window.location.assign("https://localhost:5001/");
             });
         }
     }, {
@@ -59,7 +72,7 @@ var NavigationLinks = function (_React$Component) {
                     ),
                     React.createElement(
                         "li",
-                        null,
+                        { onClick: this.signOut, value: 3 },
                         "Sign Out"
                     )
                 )

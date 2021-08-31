@@ -8,11 +8,21 @@ class NavigationLinks extends React.Component {
             navigation: 0
         };
         this.changeNavigation = this.changeNavigation.bind(this);
+        this.signOut = this.signOut.bind(this);
     }
     changeNavigation(e){
         this.setState({navigation: e.target.value}, () => {
             this.props.navigation(this.state.navigation);
         });
+    }
+    signOut(){
+        fetch("https://localhost:5001/api/User/SignOut", {
+            method: "POST",
+            headers:{
+                "Content-Type": "application/json"
+            }
+        })
+            .then(() => window.location.assign("https://localhost:5001/"));
     }
     render() {
         return(
@@ -21,7 +31,7 @@ class NavigationLinks extends React.Component {
                     <li onClick={this.changeNavigation} value={0}>Home</li>
                     <li onClick={this.changeNavigation} value={1}>Add Goal</li>
                     <li onClick={this.changeNavigation} value={2}>Delete Goal</li>
-                    <li>Sign Out</li>
+                    <li onClick={this.signOut} value={3}>Sign Out</li>
                 </ul>
             </div>
         )

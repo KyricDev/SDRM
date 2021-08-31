@@ -153,5 +153,11 @@ namespace SDRM.Controllers{
             
             return BadRequest();
         }
+        [HttpPost("SignOut")]
+        public async Task<ActionResult> PostSignOut(){
+            await _signInManager.SignOutAsync();
+            
+            return Ok();
+        }
     }
 }
