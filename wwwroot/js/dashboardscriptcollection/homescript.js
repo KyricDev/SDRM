@@ -6,6 +6,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+import { siteRoot } from "/js/script.js";
+
 export var GoalContainer = function (_React$Component) {
     _inherits(GoalContainer, _React$Component);
 
@@ -17,45 +19,143 @@ export var GoalContainer = function (_React$Component) {
         _this.state = {
             list: [{
                 content: "",
+                newContent: "",
                 id: "",
-                isComplete: "",
+                isComplete: false,
                 title: "",
+                newTitle: "",
                 user: "",
-                userID: ""
-            }],
-            isdeletegoal: false
+                userID: "",
+                reveal: false,
+                initialState: true,
+                editState: false
+            }]
         };
         return _this;
     }
 
     _createClass(GoalContainer, [{
-        key: "deleteGoal",
-        value: function deleteGoal(id, e) {
+        key: "changeCompletedState",
+        value: function changeCompletedState(id, e) {
+            console.log("Change Completed State Id: " + id);
+
+            var list = this.state.list;
+
+            list.map(function (l) {
+                if (l.id == id) {
+                    l.isComplete = !l.isComplete;
+                }
+            });
+
+            this.setState({ list: list });
+        }
+    }, {
+        key: "updateTitle",
+        value: function updateTitle(id, e) {
+            var list = this.state.list;
+
+            list.map(function (l) {
+                if (l.id == id) {
+                    l.newTitle = e.target.value;
+                }
+            });
+
+            this.setState({ list: list });
+        }
+    }, {
+        key: "updateContent",
+        value: function updateContent(id, e) {
+            var list = this.state.list;
+
+            list.map(function (l) {
+                if (l.id == id) {
+                    l.newContent = e.target.value;
+                }
+            });
+
+            this.setState({ list: list });
+        }
+    }, {
+        key: "confirmEdit",
+        value: function confirmEdit(id, e) {
             var _this2 = this;
 
-            fetch("https://localhost:5001/api/RoadMapItem/DeleteRoadMapItem", {
-                method: "POST",
+            console.log("Confirm Edit Id: " + id);
+
+            var list = this.state.list;
+            var goal = {};
+
+            list.every(function (item) {
+                if (item.id == id) {
+                    goal = item;
+                    console.log("Logging Goal . . .");
+                    console.log(goal);
+                    return false;
+                }
+                return true;
+            });
+
+            fetch(siteRoot + "/api/RoadMapItem/UpdateRoadMapItem", {
+                method: "Post",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
-                    id: id
+                    id: goal.id,
+                    title: goal.newTitle,
+                    description: goal.newContent,
+                    isComplete: goal.isComplete
                 })
             }).then(function (response) {
                 return response.json();
             }).then(function (data) {
-                return console.log(data);
-            }).then(function () {
-                fetch("https://localhost:5001/api/RoadMapItem/GetRoadMapItems").then(function (response) {
-                    return response.json();
-                }).then(function (data) {
-                    console.log("Data:");
-                    console.log(data);
-                    _this2.setState({ list: data }, function () {
-                        return console.log(_this2.state.list);
+                console.log(data);
+                if (data == 200) {
+                    list.map(function (l) {
+                        if (l.id == id) {
+                            l.content = l.newContent;
+                            l.title = l.newTitle;
+                            l.editState = false;
+                        }
                     });
-                });
+
+                    _this2.setState({ list: list });
+                }
             });
+        }
+    }, {
+        key: "editGoal",
+        value: function editGoal(id, e) {
+            var list = this.state.list;
+
+            list.map(function (l) {
+                if (l.id == id) {
+                    l.editState = !l.editState;
+                }
+            });
+
+            this.setState({ list: list });
+        }
+    }, {
+        key: "revealGoal",
+        value: function revealGoal(id, e) {
+            console.log(e.target.value);
+            console.log(e);
+            console.log(id);
+
+            var list = this.state.list;
+
+            list.map(function (l) {
+                if (l.id == id) {
+                    l.reveal = !l.reveal;
+                    l.initialState = false;
+                } else {
+                    l.reveal = false;
+                    l.editState = false;
+                }
+            });
+
+            this.setState({ list: list });
         }
     }, {
         key: "componentDidMount",
@@ -64,25 +164,39 @@ export var GoalContainer = function (_React$Component) {
 
             console.log("DidMount");
 
-            fetch("https://localhost:5001/api/RoadMapItem/GetRoadMapItems").then(function (response) {
+            fetch(siteRoot + "/api/RoadMapItem/GetRoadMapItems").then(function (response) {
                 return response.json();
             }).then(function (data) {
-                return _this3.setState({ list: data });
-            });
 
-            console.log(this.state.list);
+                var goals = [];
+
+                data.forEach(function (element) {
+                    var goal = new Object();
+
+                    goal.content = element.content;
+                    goal.newContent = element.content;
+                    goal.id = element.id;
+                    goal.isComplete = element.isComplete;
+                    goal.title = element.title;
+                    goal.newTitle = element.title;
+                    goal.user = element.user;
+                    goal.userID = element.userID;
+                    goal.reveal = false;
+                    goal.initialState = true;
+                    goal.editState = false;
+
+                    goals.push(goal);
+                });
+
+                _this3.setState({ list: goals });
+            });
         }
     }, {
         key: "componentWillUnmount",
-        value: function componentWillUnmount() {
-            console.log("WillUnmount");
-            console.log(this.state.list);
-        }
+        value: function componentWillUnmount() {}
     }, {
         key: "componentDidUpdate",
-        value: function componentDidUpdate() {
-            console.log("DidUpdate");
-        }
+        value: function componentDidUpdate() {}
     }, {
         key: "render",
         value: function render() {
@@ -93,47 +207,133 @@ export var GoalContainer = function (_React$Component) {
             console.log("Render:");
             console.log(this.state.list);
 
-            if (this.props.isdeletegoal) {
-                object = this.state.list.map(function (list) {
-                    return React.createElement(
+            object = this.state.list.map(function (list) {
+                var goalState = list.isComplete ? React.createElement(
+                    "div",
+                    { className: "goal-complete-status", key: list.id, onClick: _this4.changeCompletedState.bind(_this4, list.id) },
+                    React.createElement(
+                        "svg",
+                        { width: "33", height: "33", viewBox: "0 0 33 40", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+                        React.createElement("rect", { x: "8.80005", y: "30.7999", width: "31.1128", height: "3.11128", transform: "rotate(-45 8.80005 30.7999)", fill: "#2BA700" }),
+                        React.createElement("rect", { x: "0.000610352", y: "21.9994", width: "3.11128", height: "15.5564", transform: "rotate(-45 0.000610352 21.9994)", fill: "#2BA700" })
+                    )
+                ) : React.createElement(
+                    "div",
+                    { className: "goal-complete-status", key: list.id, onClick: _this4.changeCompletedState.bind(_this4, list.id) },
+                    React.createElement(
+                        "svg",
+                        { width: "32", height: "7", viewBox: "0 0 32 7", fill: "none", xmlns: "http://www.w3.org/2000/svg" },
+                        React.createElement("path", { d: "M18.7003 3.20004C18.7003 4.69124 17.4914 5.90009 16.0002 5.90009C14.509 5.90009 13.3002 4.69124 13.3002 3.20004C13.3002 1.70885 14.509 0.5 16.0002 0.5C17.4914 0.5 18.7003 1.70885 18.7003 3.20004Z", fill: "white", stroke: "black" }),
+                        React.createElement("path", { d: "M31.5002 3.20004C31.5002 4.69124 30.2913 5.90009 28.8001 5.90009C27.3089 5.90009 26.1001 4.69124 26.1001 3.20004C26.1001 1.70885 27.3089 0.5 28.8001 0.5C30.2913 0.5 31.5002 1.70885 31.5002 3.20004Z", fill: "white", stroke: "black" }),
+                        React.createElement("path", { d: "M5.90009 3.20004C5.90009 4.69124 4.69124 5.90009 3.20004 5.90009C1.70885 5.90009 0.5 4.69124 0.5 3.20004C0.5 1.70885 1.70885 0.5 3.20004 0.5C4.69124 0.5 5.90009 1.70885 5.90009 3.20004Z", fill: "white", stroke: "black" })
+                    )
+                );
+
+                var goalContent = list.reveal ? list.editState ? React.createElement(
+                    "div",
+                    { className: "goal-container", key: list.id },
+                    React.createElement(
                         "div",
-                        { key: list.id },
-                        list.id,
-                        " ",
+                        { className: "goal-title-container remove-margin" },
+                        React.createElement("input", { type: "text", className: "edit-goal-title", onChange: _this4.updateTitle.bind(_this4, list.id), value: list.newTitle }),
+                        goalState
+                    ),
+                    React.createElement("div", { className: "add-goal-content-outline outline-animate-in" }),
+                    React.createElement(
+                        "div",
+                        { className: "add-goal-content outline-animate-in" },
+                        React.createElement("textarea", { value: list.newContent, row: "5", column: "150", className: "edit-goal-content", onChange: _this4.updateContent.bind(_this4, list.id) }),
                         React.createElement(
                             "div",
-                            { onClick: _this4.deleteGoal.bind(_this4, list.id) },
-                            "Delete"
-                        ),
-                        React.createElement("br", null),
-                        list.title,
-                        React.createElement("br", null),
-                        list.content,
-                        React.createElement("br", null),
-                        React.createElement("br", null)
-                    );
-                });
-            } else {
-                object = this.state.list.map(function (list) {
-                    return React.createElement(
+                            { className: "button-container-edit" },
+                            React.createElement(
+                                "button",
+                                { onClick: _this4.confirmEdit.bind(_this4, list.id), className: "button" },
+                                "Confirm"
+                            ),
+                            React.createElement(
+                                "button",
+                                { onClick: _this4.editGoal.bind(_this4, list.id), className: "button" },
+                                "Cancel"
+                            )
+                        )
+                    )
+                ) : React.createElement(
+                    "div",
+                    { className: "goal-container", key: list.id },
+                    React.createElement(
                         "div",
-                        { key: list.id },
-                        list.id,
-                        React.createElement("br", null),
-                        list.title,
-                        React.createElement("br", null),
-                        list.content,
-                        React.createElement("br", null),
-                        React.createElement("br", null)
-                    );
-                });
-            }
+                        { className: "goal-title-container remove-margin" },
+                        React.createElement(
+                            "div",
+                            { className: "goal-title", onClick: _this4.revealGoal.bind(_this4, list.id) },
+                            list.title
+                        ),
+                        goalState
+                    ),
+                    React.createElement("div", { className: "add-goal-content-outline outline-animate-in" }),
+                    React.createElement(
+                        "div",
+                        { className: "add-goal-content outline-animate-in" },
+                        React.createElement(
+                            "div",
+                            null,
+                            list.content
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: "button-container-edit" },
+                            React.createElement(
+                                "button",
+                                { onClick: _this4.editGoal.bind(_this4, list.id), className: "button" },
+                                "Edit"
+                            )
+                        )
+                    )
+                ) : list.initialState ? React.createElement(
+                    "div",
+                    { className: "goal-container", key: list.id },
+                    React.createElement(
+                        "div",
+                        { className: "goal-title-container" },
+                        React.createElement(
+                            "div",
+                            { className: "goal-title", onClick: _this4.revealGoal.bind(_this4, list.id) },
+                            list.title
+                        ),
+                        goalState
+                    )
+                ) : React.createElement(
+                    "div",
+                    { className: "goal-container", key: list.id },
+                    React.createElement(
+                        "div",
+                        { className: "goal-title-container" },
+                        React.createElement(
+                            "div",
+                            { className: "goal-title", onClick: _this4.revealGoal.bind(_this4, list.id) },
+                            list.title
+                        ),
+                        goalState
+                    ),
+                    React.createElement("div", { className: "add-goal-content-outline outline-animate-out" }),
+                    React.createElement("div", { className: "add-goal-content content-animate-out" })
+                );
+                return React.createElement(
+                    "div",
+                    null,
+                    goalContent
+                );
+            });
 
             return React.createElement(
                 "div",
-                null,
-                "Objects:",
-                object
+                { className: "goals" },
+                React.createElement(
+                    "div",
+                    { className: "goal-list-container" },
+                    object
+                )
             );
         }
     }]);

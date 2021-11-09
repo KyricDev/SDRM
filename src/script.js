@@ -1,3 +1,5 @@
+export var siteRoot = "https://localhost:5001";
+
 export class FormField extends React.Component {
     constructor(props) {
         super(props);

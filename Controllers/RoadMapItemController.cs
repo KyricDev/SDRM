@@ -34,6 +34,7 @@ namespace SDRM.Controllers{
             public string description { get; set; }
             public bool isComplete { get; set; }
         }
+        public int[] ItemIDs { get; set; }
 
         [HttpGet]
         [Route("[action]")]
@@ -57,13 +58,13 @@ namespace SDRM.Controllers{
                 }
             }
 
-            var roadMapItems = _userContext.RoadMapItems.Where(u => u.UserID == id).ToList();
+            var roadMapItems = _userContext.RoadMapItems.Where(u => u.UserID == id).OrderBy(u => u.ID).ToList();
 
             _logger.LogInformation($"roadMapItems:");
             foreach(RoadMapItem i in roadMapItems){
                 _logger.LogInformation($"{i.Title}: {i.Content}");
             }
-
+            
             return Ok(roadMapItems);
         }
 
@@ -122,7 +123,28 @@ namespace SDRM.Controllers{
                 return Ok(200);
             }
             
-            _logger.LogInformation($"Failed to Deleete Item");
+            _logger.LogInformation($"Failed to Delete Item");
+            return BadRequest();
+        }
+        
+        [HttpPost("UpdateRoadMapItem")]
+        public async Task<IActionResult> UpdateRoadMapItem(Item item){
+            _logger.LogInformation($"Item to Update: {item.id}");
+
+            var itemEdit = await _userContext.RoadMapItems.FindAsync(item.id);
+
+            itemEdit.Title = item.title;
+            itemEdit.Content = item.description;
+
+            _userContext.RoadMapItems.Update(itemEdit);
+            var results = await _userContext.SaveChangesAsync();
+
+            if (results > 0){
+                _logger.LogInformation($"Item Successfully Updated!");
+                return Ok(200);
+            }
+            
+            _logger.LogInformation($"Failed to Update Item");
             return BadRequest();
         }
     }

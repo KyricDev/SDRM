@@ -37,7 +37,12 @@ namespace SDRM
             services.AddControllersWithViews();
             services.AddLogging();
             services.AddSpaStaticFiles(option => {
-                option.RootPath = "wwwroot/js";
+                option.RootPath = "wwwroot";
+            });
+            services.AddCors(options =>{
+                options.AddDefaultPolicy(options => {
+                    options.AllowAnyOrigin();
+                });
             });
             services.AddSwaggerGen(c =>
             {
@@ -98,6 +103,7 @@ namespace SDRM
             app.UseSpaStaticFiles();
 
             app.UseRouting();
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();

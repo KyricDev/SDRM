@@ -1,4 +1,4 @@
-import { FormField } from "/script.js";
+import { FormField } from "/js/script.js";
 
 class RegisterForm extends React.Component {
     constructor(props) {

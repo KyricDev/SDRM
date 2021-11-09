@@ -1,4 +1,4 @@
-import { FormField } from "/script.js";
+import { FormField } from "/js/script.js";
 
 // LoginForm using Login API
 
