@@ -1,3 +1,5 @@
+import { siteRoot } from "/js/script.js";
+
 class GoalTitle extends React.Component {
     constructor(props) {
         super(props);
@@ -8,7 +10,9 @@ class GoalTitle extends React.Component {
     }
     render(){
         return(
-            <input type="text" placeholder="Enter Title" onChange={this.changeTitle}></input>
+            <div className="add-goal-title-container">
+                <input className="add-goal-title" type="text" placeholder="Enter Title" onChange={this.changeTitle}></input>
+            </div>
         )
     }
 }
@@ -23,7 +27,9 @@ class GoalContent extends React.Component {
     }
     render(){
         return(
-            <textarea row="5" column="150" placeholder="Enter Description" onChange={this.changeDescription}></textarea>
+            <div className="add-goal-content-container">
+                <textarea className="add-goal-content" row="5" column="150" placeholder="Enter Description" onChange={this.changeDescription}></textarea>
+            </div>
         )
     }
 }
@@ -47,7 +53,7 @@ export class AddGoalContainer extends React.Component {
         this.setState({description: e, status: 0});
     }
     submit(e){
-        fetch("https://localhost:5001/api/RoadMapItem/AddRoadMapItem", {
+        fetch(siteRoot + "/api/RoadMapItem/AddRoadMapItem", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -64,22 +70,22 @@ export class AddGoalContainer extends React.Component {
             });
     }
     render(){
-        let status = "";
-
-        if (this.state.status == 200){
-            status = "Goal Added" + " " + this.state.title;
-        }
+        let status = this.state.status == 200 ?
+                        <div className="status">
+                            {"Goal Added" + " " + this.state.title}
+                        </div>
+                        :
+                        <div className="placeholder-margin">
+                            {" "}
+                        </div>
 
         return(
-            <div>
+            <div className="add-goal-container">
                 <GoalTitle title={this.updateTitle} />
-                <br />
-                <br />
+                <div className="add-goal-content-outline"></div>
                 <GoalContent description={this.updateDescription} />
-                <br />
-                <button type="submit" onClick={this.submit}>Submit</button>
-                <br />
                 {status}
+                <button className="add-goal-submit" type="submit" onClick={this.submit}>Submit</button>
             </div>
     )
     }

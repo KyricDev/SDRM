@@ -12,6 +12,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 
+//"Host=127.0.0.1 ; Database=RoadMapItemContext; Username=Ricky; Password=Madrid0424!;"
+/*
+"RoadMapItemContext": "host=sdrmdb.postgres.database.azure.com; port=5432; database=RoadMapItemContext; username=KyricDev; password=Madrid0424!; Trust Server Certificate=true; SSL Mode=Require;",
+"ApplicationUserContext": "host=sdrmdb.postgres.database.azure.com; port=5432; database=ApplicationUser; username=KyricDev; password=Madrid0424!; Trust Server Certificate=true; SSL Mode=Require;",
+"UserContext":"host=sdrmdb.postgres.database.azure.com; port=5432; database=RoadMapItemContext; username=KyricDev; password=Madrid0424!; Trust Server Certificate=true; SSL Mode=Require;"
+*/
 namespace SDRM.Controllers{
     [ApiController]
     [Route("/api/[controller]")]
@@ -34,7 +40,15 @@ namespace SDRM.Controllers{
             public string description { get; set; }
             public bool isComplete { get; set; }
         }
-        public int[] ItemIDs { get; set; }
+
+        public class Comparer : IComparer<RoadMapItem>{
+            public int Compare(RoadMapItem item1, RoadMapItem item2){
+                return item1.ID.CompareTo(item2.ID);
+            }
+        }
+        public class ItemIDs{
+            public int [] itemIDs { get; set; }
+        }
 
         [HttpGet]
         [Route("[action]")]
@@ -59,12 +73,12 @@ namespace SDRM.Controllers{
             }
 
             var roadMapItems = _userContext.RoadMapItems.Where(u => u.UserID == id).OrderBy(u => u.ID).ToList();
-
+            /*
             _logger.LogInformation($"roadMapItems:");
             foreach(RoadMapItem i in roadMapItems){
                 _logger.LogInformation($"{i.Title}: {i.Content}");
             }
-            
+            */
             return Ok(roadMapItems);
         }
 
@@ -86,7 +100,10 @@ namespace SDRM.Controllers{
             };
 
             user.RoadMapItems.Add(roadMapItem);
-            _userContext.RoadMapItems.Add(roadMapItem);
+            var newItem = user.RoadMapItems.Last();
+            _logger.LogInformation($"Item ID: {newItem.ID}");
+            _userContext.RoadMapItems.Add(newItem);
+
             var result = await _userContext.SaveChangesAsync();
 
             if (result > 0){
@@ -126,6 +143,26 @@ namespace SDRM.Controllers{
             _logger.LogInformation($"Failed to Delete Item");
             return BadRequest();
         }
+
+        [HttpPost("DeleteMultipleRoadMapItems")]
+        public async Task<IActionResult> DeleteMultipleRoadMapItems(ItemIDs itemIDs){
+            _logger.LogInformation($"{itemIDs}");
+
+            foreach (int ID in itemIDs.itemIDs){
+                var item = await _userContext.RoadMapItems.Where(item => item.ID == ID).FirstAsync();
+                _userContext.RoadMapItems.Remove(item);
+            }
+
+            var results = await _userContext.SaveChangesAsync();
+
+            if (results > 0){
+                _logger.LogInformation("Successfully Deleted Items");
+                return Ok(200);
+            }
+
+            _logger.LogInformation("Failed to Delete Items");
+            return BadRequest();
+        }
         
         [HttpPost("UpdateRoadMapItem")]
         public async Task<IActionResult> UpdateRoadMapItem(Item item){
@@ -145,6 +182,24 @@ namespace SDRM.Controllers{
             }
             
             _logger.LogInformation($"Failed to Update Item");
+            return BadRequest();
+        }
+        [HttpPost("ChangeRoadMapItemCompletedStatus")]
+        public async Task<IActionResult> ChangeRoadMapItemCompletedStatus(Item item){
+            _logger.LogInformation($"Item ID: {item.id}");
+
+            var itemModify = await _userContext.RoadMapItems.Where(i => i.ID == item.id).FirstOrDefaultAsync();
+
+            itemModify.IsComplete = !itemModify.IsComplete;
+            _userContext.RoadMapItems.Update(itemModify);
+            var results = await _userContext.SaveChangesAsync();
+
+            if (results > 0){
+                _logger.LogInformation($"Successfully Modified Item State");
+                return Ok(200);
+            }
+
+            _logger.LogInformation($"Failed to Change Item Status");
             return BadRequest();
         }
     }

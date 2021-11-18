@@ -46,11 +46,31 @@ namespace SDRM.Controllers{
             }
         }
 
-        [HttpGet]
+        public class UserInfo{
+            public string ID { get; set; }
+            public string Name { get; set; }
+            public string NewName { get; set; }
+            public string Title { get; set; }
+            public string NewTitle { get; set; }
+            /*
+            public UserInfo (User user){
+                this.ID = user.ID;
+                this.FirstName = user.FirstName;
+                this.NewFirstName = user.FirstName;
+                this.LastName = user.LastName;
+                this.NewLastName = user.LastName;
+                this.Title = user.Title;
+                this.NewTitle = user.Title;
+            }
+            */
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GetUser")]
         public ActionResult GetUser(){
             var user = new ApplicationUser();
 
-            return Ok(new ResponseInfo(user));
+            return Ok(200);
         }
 
         [HttpGet("FindUser")]
@@ -59,15 +79,19 @@ namespace SDRM.Controllers{
             
             var claims = HttpContext.User.Claims.ToList();
 
-            ApplicationUser user = null;
-
             foreach (var claim in claims){
                 if (claim.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"){
                     _logger.LogInformation($"ID Found: {claim.Value}");
 
-                    user = await _userManager.Users.FirstOrDefaultAsync(u => u.Id == claim.Value);
+                    var user = await _userContext.Users.FindAsync(claim.Value);
 
-                    return Ok(new ResponseInfo(user));
+                    return Ok(new UserInfo(){
+                        ID = user.ID,
+                        Name = user.Name,
+                        NewName = user.Name,
+                        Title = user.Title,
+                        NewTitle = user.Title
+                    });
                 }
             }
 
@@ -117,16 +141,24 @@ namespace SDRM.Controllers{
 
             _logger.LogInformation(username + " " + password + " " + confirmpassword);
 
-            if (username == null || password == null || confirmpassword == null){
-                _logger.LogInformation("Missing Field");
+            var userSearch = await _userManager.FindByNameAsync(username);
+
+            if (userSearch != null){
+                _logger.LogInformation("Duplicate User");
 
                 return BadRequest();
+            }
+
+            if (username == null || password == null || confirmpassword == null){
+                _logger.LogInformation("Username and/or Passwor is Missing");
+
+                return BadRequest("Username and/or Password is Missing");
             }   
 
             if (password != confirmpassword){
                 _logger.LogInformation("Passwords do not Match");
 
-                return BadRequest();
+                return BadRequest("Passwords do not Match");
             }    
 
             var user = new ApplicationUser(username);
@@ -141,7 +173,7 @@ namespace SDRM.Controllers{
                     _logger.LogInformation("Error in Creating User");
                     await _userManager.DeleteAsync(user);
 
-                    return BadRequest();
+                    return BadRequest("User not Created. Minimum Password Length is 5 Characters");
                 }
 
                 _logger.LogInformation($"User {newuser.Username} created.");
@@ -151,13 +183,33 @@ namespace SDRM.Controllers{
 
             _logger.LogInformation($"{result}");
             
-            return BadRequest();
+            return BadRequest("User not Created. Minimum Password Length is 5 Characters");
         }
         [HttpPost("SignOut")]
         public async Task<ActionResult> PostSignOut(){
             await _signInManager.SignOutAsync();
             
             return Ok();
+        }
+        [HttpPost("UpdateUserInfo")]
+        public async Task<ActionResult> UpdateUserInfo(UserInfo userInfo){
+            _logger.LogInformation($"Id Found: {userInfo.ID}");
+
+            var user = await _userContext.Users.FindAsync(userInfo.ID);
+
+            user.Name = userInfo.NewName;
+            user.Title = userInfo.NewTitle;
+
+            _userContext.Users.Update(user);
+            var results = await _userContext.SaveChangesAsync();
+
+            if (results > 0){
+                _logger.LogInformation($"Successfully Updated User");
+                return Ok(200);
+            }
+
+            _logger.LogInformation("Failed to Update User");
+            return BadRequest();
         }
     }
 }
