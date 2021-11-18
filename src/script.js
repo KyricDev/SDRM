@@ -1,4 +1,5 @@
 export var siteRoot = "https://localhost:5001";
+//export var siteRoot = "https://sdrm.azurewebsites.net";
 
 export class FormField extends React.Component {
     constructor(props) {
@@ -26,10 +27,10 @@ export class FormField extends React.Component {
         }
 
         return (
-            <div>
+            <div className="field" >
                 <label>{field}</label>
+                <br />
                 <input type="text" name={field} onChange={this.updateField}></input>
-                <p>{this.state.value}</p>
             </div>
         )
     }

@@ -67,7 +67,7 @@ namespace SDRM
             })
                 .AddEntityFrameworkStores<ApplicationUserContext>()
                 .AddDefaultTokenProviders();
-
+            
             services.ConfigureApplicationCookie(options => {
                 options.Cookie.Name = "Cookie";
                 options.LoginPath = "/";
@@ -79,6 +79,8 @@ namespace SDRM
             })
                 .AddCookie("DefaultCookie", options => {
                     options.Cookie.Name = "Default";
+                    options.LoginPath = "/";
+                    options.ReturnUrlParameter = "/";
                 });
             */
             services.AddAuthorization(option => {

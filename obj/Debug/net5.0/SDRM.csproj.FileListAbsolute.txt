@@ -59,3 +59,10 @@ C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\Microsoft.AspNetCore.Metadata.dll
 C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\Microsoft.AspNetCore.SpaServices.Extensions.dll
 C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\Razor\Views\UserView\Dashboard.cshtml.g.cs
 C:\Users\Ricky\repos\SDRM\obj\Debug\net5.0\Razor\Views\UserView\Form.cshtml.g.cs
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\publish\appsettings.Development.json
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\publish\package-lock.json
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\publish\package.json
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\publish\web.config
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\publish\appsettings.json
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\publish\SDRM.deps.json
+C:\Users\Ricky\repos\SDRM\bin\Debug\net5.0\publish\SDRM.runtimeconfig.json

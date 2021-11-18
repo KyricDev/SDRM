@@ -52,6 +52,12 @@ namespace SDRM.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("text");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text");
+
                     b.Property<string>("Username")
                         .HasColumnType("text");
 

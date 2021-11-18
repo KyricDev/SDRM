@@ -22,15 +22,36 @@ export class GoalContainer extends React.Component {
     changeCompletedState(id, e){
         console.log("Change Completed State Id: " + id);
 
-        let list = this.state.list;
-
-        list.map( l =>{
-            if (l.id == id){
-                l.isComplete = !l.isComplete;
-            }
+        fetch(siteRoot + "/api/RoadMapItem/ChangeRoadMapItemCompletedStatus", {
+            method: "POST",
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                id: id,
+                title: "",
+                description: "",
+                isComplete: false
+            })
         })
+            .then(response => response.json())
+            .then(data => {
+                if (data == 200){
+                    console.log("Successfully Modified Item");
 
-        this.setState({list: list});
+                    let list = this.state.list;
+
+                    list.map( l => {
+                        if (l.id == id){
+                            l.isComplete = !l.isComplete;
+                        }
+                    })
+
+                    this.setState({list: list});
+                }
+                else{
+                    console.log("Item Failed to be Modified");
+                    console.log(data);
+                }
+            })
     }
     updateTitle(id, e){
         let list = this.state.list;
@@ -208,7 +229,7 @@ export class GoalContainer extends React.Component {
                                                 </div>
                                                 <div className="add-goal-content-outline outline-animate-in"></div> 
                                                 <div className="add-goal-content outline-animate-in">
-                                                    <div>{list.content}</div>
+                                                    <p className="content">{list.content}</p>
                                                     <div className="button-container-edit">
                                                         <button onClick={this.editGoal.bind(this, list.id)} className="button">Edit</button>
                                                     </div>

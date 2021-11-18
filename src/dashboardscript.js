@@ -1,14 +1,161 @@
 import {GoalContainer} from "/js/dashboardscriptcollection/homescript.js";
 import {AddGoalContainer} from "/js/dashboardscriptcollection/addgoalscript.js";
+import {DeleteGoalContainer} from "/js/dashboardscriptcollection/deletegoalscript.js";
 import {siteRoot} from "/js/script.js";
 
 class UserGreeting extends GoalContainer {
+    constructor(props){
+        super(props);
+        this.state = {
+            data: {
+                id: "",
+                name: "",
+                newName: "",
+                title: "",
+                newTitle: ""
+            },
+            isEditable: false
+        };
+        this.editState = this.editState.bind(this);
+        this.confirmEdit = this.confirmEdit.bind(this);
+        this.changeName = this.changeName.bind(this);
+        this.changeTitle = this.changeTitle.bind(this);
+    }
+    componentDidMount() {
+        fetch(siteRoot + "/api/User/FindUser")
+            .then(response => response.json())
+            .then(info => {
+                this.setState({data: info});
+                console.log(this.state.data);
+            });
+    }
+    editState(){
+        let isEditable = this.state.isEditable;
+
+        this.setState({isEditable: !isEditable});
+    }
+    confirmEdit(){
+        console.log(this.state.data);
+        let newData = this.state.data;
+
+        newData.name = this.state.data.newName;
+        newData.title = this.state.data.newTitle;
+
+        fetch(siteRoot + "/api/User/UpdateUserInfo", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                ID: this.state.data.id,
+                Name: this.state.data.name,
+                NewName: this.state.data.newName,
+                Title: this.state.data.title,
+                NewTitle: this.state.data.newTitle
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data == 200){
+                    console.log("Successfully Updated User");
+                    this.setState({data: newData});
+                    this.setState({isEditable: false});
+                    console.log(this.state);
+                }
+                else{
+                    console.log("Failed to Update User")
+                }
+            })
+    }
+    changeName(e){
+        let data = this.state.data;
+        data.newName = e.target.value;
+
+        this.setState({data: data});
+    }
+    changeTitle(e){
+        let data = this.state.data;
+        data.newTitle = e.target.value;
+
+        this.setState({data: data});
+        console.log(this.state.data);
+    }
     render() {
+        let title = this.state.data.title;
+        if (this.state.data.title == ""){
+            title = "Change your Title";
+        }
+
+        let newTitle = this.state.data.newTitle;
+        if (this.state.data.newTitle == ""){
+            newTitle = "Change your Title";
+        }
+
+        let UserGreeting = this.state.isEditable ?
+                           this.state.data.newTitle == "" ?
+                            <div className="name-container">
+                                <div className="flex-row">
+                                    <input type="text" className="username editable input-box" value={this.state.data.newName} onChange={this.changeName}></input>
+                                </div>
+                                <input type="text" className="title editable input-box" placeholder="Change your Title"  onChange={this.changeTitle}></input>
+                                <div className="flex-row">
+                                    <svg className="button-margin hover-pointer" onClick={this.confirmEdit} width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_211_10)">
+                                        <path d="M1.91645 14.9825C0.987611 14.8637 0.244887 14.1799 0.0386213 13.2539C-0.0166617 13.0057 -0.0108009 1.94431 0.0447354 1.7146C0.252141 0.856709 0.888449 0.232968 1.74626 0.04668C2.00004 -0.00843446 12.6031 -0.0182959 12.91 0.0362978C13.7428 0.184491 14.2421 0.58688 14.3232 1.17536C14.3579 1.42762 14.3651 1.41587 13.9342 1.80964C13.5545 2.1567 13.5545 2.1567 13.5318 2.02593C13.4549 1.58244 13.1721 1.25758 12.7508 1.12866C12.5407 1.06439 2.09624 1.06465 1.88757 1.12898C1.48914 1.25171 1.20196 1.56113 1.12049 1.95544C1.0782 2.1601 1.07806 12.8401 1.12034 13.0422C1.20122 13.429 1.4771 13.7352 1.86107 13.8643C2.06835 13.934 12.5239 13.9407 12.7508 13.8713C13.0655 13.775 13.3302 13.5418 13.4573 13.2488C13.5475 13.0409 13.5456 13.1061 13.5463 10.2792C13.547 7.64829 13.547 7.64829 14.0593 7.0987C14.341 6.79643 14.5873 6.53346 14.6065 6.51432C14.6576 6.46364 14.6509 13.0603 14.5998 13.2663C14.3794 14.1534 13.7736 14.7485 12.8744 14.9611C12.7269 14.996 2.18273 15.0167 1.91645 14.9826L1.91645 14.9825ZM8.326 11.4846C8.25726 11.4677 8.18392 11.4358 8.12133 11.3956C8.08649 11.3732 6.97765 10.279 5.65724 8.96398C3.00485 6.32245 3.14169 6.47035 3.14169 6.24533C3.14169 6.00845 3.12729 6.02749 3.84622 5.31414C4.56393 4.602 4.5671 4.59956 4.78769 4.58911C5.04623 4.57686 4.91627 4.46422 6.78341 6.31884C8.43796 7.96229 8.43796 7.96229 11.8971 4.54903C15.715 0.781646 15.4045 1.07032 15.6388 1.07097C15.8555 1.07161 15.8553 1.07129 16.5697 1.77385C17.295 2.48707 17.2969 2.48948 17.2984 2.71071C17.3001 2.96309 17.7047 2.54135 12.9916 7.19953C9.59501 10.5565 8.73233 11.4003 8.66161 11.4347C8.57501 11.4768 8.39993 11.5028 8.326 11.4846V11.4846Z" fill="black"/>
+                                        </g>
+                                        <defs>
+                                        <clipPath id="clip0_211_10">
+                                        <rect width="17.3077" height="15" fill="white"/>
+                                        </clipPath>
+                                        </defs>
+                                    </svg>
+                                    <svg className="button-margin hover-pointer" onClick={this.editState} width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M7.10115 14.9876C2.61583 14.7257 -0.635392 10.6614 0.105423 6.24241C0.628677 3.12115 3.12176 0.628919 6.24377 0.106147C11.3337 -0.746153 15.7464 3.66178 14.8939 8.74712C14.2682 12.4801 10.8627 15.2073 7.10115 14.9876ZM8.23412 13.6898C10.8891 13.3433 13.0015 11.4388 13.5832 8.86726C13.6921 8.38575 13.7229 8.08367 13.7229 7.49744C13.7229 4.02927 10.9688 1.27649 7.49922 1.27663C2.97355 1.27679 -0.029988 5.90971 1.81174 10.0494C2.73054 12.1146 4.75055 13.5337 7.03225 13.7168C7.22542 13.7323 8.05019 13.7137 8.23412 13.6898ZM4.34528 10.7498C3.92438 10.3288 3.92438 10.3288 5.37111 8.88253C6.81785 7.43622 6.81785 7.43622 5.37111 5.98991C3.92438 4.5436 3.92438 4.5436 4.34528 4.12263C4.76618 3.70166 4.76618 3.70166 6.21311 5.14805C7.66004 6.59443 7.66004 6.59443 9.10681 5.14809C10.5536 3.70175 10.5536 3.70175 10.9746 4.12264C11.3957 4.54354 11.3957 4.54354 9.94888 5.98988C8.50211 7.43623 8.50211 7.43622 9.94888 8.88257C11.3957 10.3289 11.3957 10.3289 10.9746 10.7498C10.5536 11.1707 10.5536 11.1707 9.10681 9.72436C7.66004 8.27801 7.66004 8.27801 6.21311 9.72441C4.76618 11.1708 4.76618 11.1708 4.34528 10.7498V10.7498Z" fill="black"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            :
+                            <div className="name-container">
+                                <div className="flex-row">
+                                    <input type="text" className="username editable input-box" value={this.state.data.newName} onChange={this.changeName}></input>
+                                </div>
+                                <input type="text" className="title editable input-box" value={this.state.data.newTitle}  onChange={this.changeTitle}></input>
+                                <div className="flex-row">
+                                    <svg className="button-margin hover-pointer" onClick={this.confirmEdit} width="18" height="15" viewBox="0 0 18 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_211_10)">
+                                        <path d="M1.91645 14.9825C0.987611 14.8637 0.244887 14.1799 0.0386213 13.2539C-0.0166617 13.0057 -0.0108009 1.94431 0.0447354 1.7146C0.252141 0.856709 0.888449 0.232968 1.74626 0.04668C2.00004 -0.00843446 12.6031 -0.0182959 12.91 0.0362978C13.7428 0.184491 14.2421 0.58688 14.3232 1.17536C14.3579 1.42762 14.3651 1.41587 13.9342 1.80964C13.5545 2.1567 13.5545 2.1567 13.5318 2.02593C13.4549 1.58244 13.1721 1.25758 12.7508 1.12866C12.5407 1.06439 2.09624 1.06465 1.88757 1.12898C1.48914 1.25171 1.20196 1.56113 1.12049 1.95544C1.0782 2.1601 1.07806 12.8401 1.12034 13.0422C1.20122 13.429 1.4771 13.7352 1.86107 13.8643C2.06835 13.934 12.5239 13.9407 12.7508 13.8713C13.0655 13.775 13.3302 13.5418 13.4573 13.2488C13.5475 13.0409 13.5456 13.1061 13.5463 10.2792C13.547 7.64829 13.547 7.64829 14.0593 7.0987C14.341 6.79643 14.5873 6.53346 14.6065 6.51432C14.6576 6.46364 14.6509 13.0603 14.5998 13.2663C14.3794 14.1534 13.7736 14.7485 12.8744 14.9611C12.7269 14.996 2.18273 15.0167 1.91645 14.9826L1.91645 14.9825ZM8.326 11.4846C8.25726 11.4677 8.18392 11.4358 8.12133 11.3956C8.08649 11.3732 6.97765 10.279 5.65724 8.96398C3.00485 6.32245 3.14169 6.47035 3.14169 6.24533C3.14169 6.00845 3.12729 6.02749 3.84622 5.31414C4.56393 4.602 4.5671 4.59956 4.78769 4.58911C5.04623 4.57686 4.91627 4.46422 6.78341 6.31884C8.43796 7.96229 8.43796 7.96229 11.8971 4.54903C15.715 0.781646 15.4045 1.07032 15.6388 1.07097C15.8555 1.07161 15.8553 1.07129 16.5697 1.77385C17.295 2.48707 17.2969 2.48948 17.2984 2.71071C17.3001 2.96309 17.7047 2.54135 12.9916 7.19953C9.59501 10.5565 8.73233 11.4003 8.66161 11.4347C8.57501 11.4768 8.39993 11.5028 8.326 11.4846V11.4846Z" fill="black"/>
+                                        </g>
+                                        <defs>
+                                        <clipPath id="clip0_211_10">
+                                        <rect width="17.3077" height="15" fill="white"/>
+                                        </clipPath>
+                                        </defs>
+                                    </svg>
+                                    <svg className="button-margin hover-pointer" onClick={this.editState} width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M7.10115 14.9876C2.61583 14.7257 -0.635392 10.6614 0.105423 6.24241C0.628677 3.12115 3.12176 0.628919 6.24377 0.106147C11.3337 -0.746153 15.7464 3.66178 14.8939 8.74712C14.2682 12.4801 10.8627 15.2073 7.10115 14.9876ZM8.23412 13.6898C10.8891 13.3433 13.0015 11.4388 13.5832 8.86726C13.6921 8.38575 13.7229 8.08367 13.7229 7.49744C13.7229 4.02927 10.9688 1.27649 7.49922 1.27663C2.97355 1.27679 -0.029988 5.90971 1.81174 10.0494C2.73054 12.1146 4.75055 13.5337 7.03225 13.7168C7.22542 13.7323 8.05019 13.7137 8.23412 13.6898ZM4.34528 10.7498C3.92438 10.3288 3.92438 10.3288 5.37111 8.88253C6.81785 7.43622 6.81785 7.43622 5.37111 5.98991C3.92438 4.5436 3.92438 4.5436 4.34528 4.12263C4.76618 3.70166 4.76618 3.70166 6.21311 5.14805C7.66004 6.59443 7.66004 6.59443 9.10681 5.14809C10.5536 3.70175 10.5536 3.70175 10.9746 4.12264C11.3957 4.54354 11.3957 4.54354 9.94888 5.98988C8.50211 7.43623 8.50211 7.43622 9.94888 8.88257C11.3957 10.3289 11.3957 10.3289 10.9746 10.7498C10.5536 11.1707 10.5536 11.1707 9.10681 9.72436C7.66004 8.27801 7.66004 8.27801 6.21311 9.72441C4.76618 11.1708 4.76618 11.1708 4.34528 10.7498V10.7498Z" fill="black"/>
+                                    </svg>
+                                </div>
+                            </div>
+                            :
+                            <div className="flex-row add-margin">
+                                <div className="name-container">
+                                    <div className="username">{this.state.data.name}</div>
+                                    <div className="title">{title}</div>
+                                </div>
+                                <svg className="hover-pointer align-middle margin-left" onClick={this.editState} width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g clip-path="url(#clip0_205_4)">
+                                    <path d="M1.69591 14.9537C0.950798 14.7882 0.405171 14.3098 0.12365 13.5752C-0.0317901 13.1696 -0.045212 2.28646 0.10923 1.88409C0.408273 1.10501 0.972255 0.612888 1.73376 0.466557C2.20563 0.375883 7.37482 0.400052 7.55125 0.493757C7.86065 0.658077 7.89995 1.04417 7.6328 1.29492C7.5465 1.37593 7.5465 1.37593 4.71799 1.39213C1.50057 1.41056 1.70551 1.39151 1.35969 1.70381C0.95661 2.06778 0.986117 1.59336 0.986117 7.70998C0.986117 13.8472 0.956959 13.3402 1.33009 13.6907C1.70473 14.0427 1.14143 14.0117 7.37421 14.0226C13.7355 14.0337 13.2838 14.0583 13.6726 13.6799C14.0025 13.3589 13.9861 13.5168 14.0043 10.4973C14.0201 7.88205 14.0218 7.82163 14.0861 7.71181C14.268 7.40082 14.7229 7.3953 14.9126 7.70178C15.0174 7.87104 15.0335 12.9606 14.9305 13.3649C14.7459 14.09 14.1906 14.6775 13.4558 14.9252C13.2216 15.0042 2.04498 15.0313 1.69591 14.9537V14.9537ZM3.2752 11.9098C3.22109 11.8862 3.13818 11.8207 3.09097 11.7643C2.91467 11.5539 2.91282 11.5633 3.45134 9.93942C3.94259 8.45807 3.94259 8.45807 8.0935 4.28515C10.3765 1.99004 12.281 0.0867969 12.3258 0.055727C12.426 -0.0137902 12.6828 -0.0193992 12.8041 0.0452805C12.909 0.101246 14.7889 1.99396 14.8397 2.09476C14.8897 2.19394 14.8841 2.41572 14.8291 2.51973C14.7748 2.62229 6.50165 10.9288 6.40632 10.9765C6.27397 11.0427 3.50572 11.9554 3.44098 11.9541C3.40392 11.9534 3.32932 11.9335 3.2752 11.9098L3.2752 11.9098ZM8.90184 7.13201C11.8813 4.13681 11.8813 4.13681 11.3135 3.5665C10.7456 2.9962 10.7456 2.9962 7.77607 5.97859C4.80653 8.96099 4.80653 8.96099 4.58168 9.62383C4.17451 10.8241 4.1112 10.7249 5.07987 10.4052C5.92237 10.1272 5.92237 10.1272 8.90184 7.13201V7.13201ZM13.1272 2.88112C13.4322 2.57731 13.6817 2.31833 13.6817 2.30562C13.6817 2.29291 13.4311 2.03113 13.1248 1.7239C12.5679 1.1653 12.5679 1.1653 12.004 1.73235C11.4401 2.2994 11.4401 2.2994 12.004 2.86645C12.3141 3.17833 12.569 3.4335 12.5703 3.4335C12.5717 3.4335 12.8223 3.18493 13.1272 2.88112V2.88112Z" fill="black"/>
+                                    </g>
+                                    <defs>
+                                    <clipPath id="clip0_205_4">
+                                    <rect width="15" height="15" fill="white"/>
+                                    </clipPath>
+                                    </defs>
+                                </svg>
+                            </div>
+
         return(
-            <div className="name-container">
-                <div className="username">{"User N. Ame"}</div>
-                <div className="title">{"Software Developer"}</div>
-            </div>
+            UserGreeting
         )
     }
 }
@@ -81,22 +228,11 @@ class DashboardRoot extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            data: {
-                username: ""
-            },
             navigation: 0
         };
         this.changeNavigation = this.changeNavigation.bind(this);
     }
     componentDidMount(){
-        console.log("Dashboard DidMount");
-
-        fetch(siteRoot + "/api/User/FindUser")
-            .then(response => response.json())
-            .then(info => {
-                console.log(info);
-                this.setState({data: info});
-            });
     }
     componentDidUpdate(){
         console.log("Dashboard DidUpdate");
@@ -113,7 +249,7 @@ class DashboardRoot extends React.Component {
                     <div>
                         <NavigationLinks navigation={this.changeNavigation} />
                         <UserGreeting />
-                        <GoalContainer isdeletegoal={false} />
+                        <GoalContainer />
                     </div>
                 )
                 break;
@@ -131,7 +267,7 @@ class DashboardRoot extends React.Component {
                     <div>
                         <NavigationLinks navigation={this.changeNavigation} />
                         <UserGreeting />
-                        <GoalContainer isdeletegoal={true} />
+                        <DeleteGoalContainer />
                     </div>
                 )   
                 break;
