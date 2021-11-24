@@ -24,12 +24,8 @@ export class DeleteGoalContainer extends React.Component {
         fetch(siteRoot + "/api/RoadMapItem/GetRoadMapItems")
             .then(response => response.json())
             .then(data => this.setState({list: data }));
-        
-        console.log(this.state.list);
     }
     setDelete(id, e){
-        console.log("delete: " + id);
-
         let list = this.state.list;
 
         list.map( list => {
@@ -38,7 +34,7 @@ export class DeleteGoalContainer extends React.Component {
             }
         })
 
-        this.setState({list: list}, () => console.log(list) );
+        this.setState({list: list});
     }
     confirmDelete(e){
         let list = this.state.list;
@@ -49,8 +45,6 @@ export class DeleteGoalContainer extends React.Component {
                 deleteList.push(list.id);
             }
         })
-
-        console.log(deleteList);
 
         fetch(siteRoot + "/api/RoadMapItem/DeleteMultipleRoadMapItems", {
             method: "POST", 
@@ -72,7 +66,6 @@ export class DeleteGoalContainer extends React.Component {
                 }
                 else{
                     console.log("Items Failed to be Deleted");
-                    console.log(data);
                 }
             })
     }

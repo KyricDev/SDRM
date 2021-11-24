@@ -45,7 +45,6 @@ var UserGreeting = function (_GoalContainer) {
                 return response.json();
             }).then(function (info) {
                 _this2.setState({ data: info });
-                console.log(_this2.state.data);
             });
         }
     }, {
@@ -60,7 +59,6 @@ var UserGreeting = function (_GoalContainer) {
         value: function confirmEdit() {
             var _this3 = this;
 
-            console.log(this.state.data);
             var newData = this.state.data;
 
             newData.name = this.state.data.newName;
@@ -85,7 +83,6 @@ var UserGreeting = function (_GoalContainer) {
                     console.log("Successfully Updated User");
                     _this3.setState({ data: newData });
                     _this3.setState({ isEditable: false });
-                    console.log(_this3.state);
                 } else {
                     console.log("Failed to Update User");
                 }
@@ -106,7 +103,6 @@ var UserGreeting = function (_GoalContainer) {
             data.newTitle = e.target.value;
 
             this.setState({ data: data });
-            console.log(this.state.data);
         }
     }, {
         key: "render",
@@ -256,8 +252,6 @@ var NavigationLinks = function (_React$Component) {
     _createClass(NavigationLinks, [{
         key: "changeNavigation",
         value: function changeNavigation(e) {
-            console.log("Navigation: " + e.target.parentElement.value);
-
             this.props.navigation(e.target.parentElement.value);
         }
     }, {
@@ -377,9 +371,7 @@ var DashboardRoot = function (_React$Component2) {
         value: function componentDidMount() {}
     }, {
         key: "componentDidUpdate",
-        value: function componentDidUpdate() {
-            console.log("Dashboard DidUpdate");
-        }
+        value: function componentDidUpdate() {}
     }, {
         key: "changeNavigation",
         value: function changeNavigation(e) {

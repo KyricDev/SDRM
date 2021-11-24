@@ -26,7 +26,6 @@ class UserGreeting extends GoalContainer {
             .then(response => response.json())
             .then(info => {
                 this.setState({data: info});
-                console.log(this.state.data);
             });
     }
     editState(){
@@ -35,7 +34,6 @@ class UserGreeting extends GoalContainer {
         this.setState({isEditable: !isEditable});
     }
     confirmEdit(){
-        console.log(this.state.data);
         let newData = this.state.data;
 
         newData.name = this.state.data.newName;
@@ -60,7 +58,6 @@ class UserGreeting extends GoalContainer {
                     console.log("Successfully Updated User");
                     this.setState({data: newData});
                     this.setState({isEditable: false});
-                    console.log(this.state);
                 }
                 else{
                     console.log("Failed to Update User")
@@ -78,7 +75,6 @@ class UserGreeting extends GoalContainer {
         data.newTitle = e.target.value;
 
         this.setState({data: data});
-        console.log(this.state.data);
     }
     render() {
         let title = this.state.data.title;
@@ -169,8 +165,6 @@ class NavigationLinks extends React.Component {
         this.signOut = this.signOut.bind(this);
     }
     changeNavigation(e){
-        console.log("Navigation: " + e.target.parentElement.value);
-
         this.props.navigation(e.target.parentElement.value);
     }
     signOut(){
@@ -235,7 +229,6 @@ class DashboardRoot extends React.Component {
     componentDidMount(){
     }
     componentDidUpdate(){
-        console.log("Dashboard DidUpdate");
     }
     changeNavigation(e){
         this.setState({navigation: e});

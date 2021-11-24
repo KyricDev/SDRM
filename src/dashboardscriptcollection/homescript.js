@@ -20,8 +20,6 @@ export class GoalContainer extends React.Component {
         };
     }
     changeCompletedState(id, e){
-        console.log("Change Completed State Id: " + id);
-
         fetch(siteRoot + "/api/RoadMapItem/ChangeRoadMapItemCompletedStatus", {
             method: "POST",
             headers: { 'Content-Type': 'application/json'},
@@ -49,7 +47,6 @@ export class GoalContainer extends React.Component {
                 }
                 else{
                     console.log("Item Failed to be Modified");
-                    console.log(data);
                 }
             })
     }
@@ -76,8 +73,6 @@ export class GoalContainer extends React.Component {
         this.setState({list: list});
     }
     confirmEdit(id, e){
-        console.log("Confirm Edit Id: " + id);
-
         let list = this.state.list;
         let goal = {};
 
@@ -85,7 +80,6 @@ export class GoalContainer extends React.Component {
             if (item.id == id){
                 goal = item;
                 console.log("Logging Goal . . .");
-                console.log(goal);
                 return false;
             }
             return true;
@@ -105,7 +99,6 @@ export class GoalContainer extends React.Component {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data)
             if (data == 200){
                 list.map( l => {
                     if (l.id == id){
@@ -131,10 +124,6 @@ export class GoalContainer extends React.Component {
         this.setState({list: list});
     }
     revealGoal(id, e) {
-        console.log(e.target.value);
-        console.log(e);
-        console.log(id);
-
         let list = this.state.list;
 
         list.map( l => {
@@ -186,9 +175,6 @@ export class GoalContainer extends React.Component {
     }
     render() {
         let object = "";
-        
-        console.log("Render:");
-        console.log(this.state.list);
 
             object = this.state.list.map( (list) => { 
                         let goalState = list.isComplete ? 

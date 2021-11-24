@@ -39,8 +39,6 @@ export var GoalContainer = function (_React$Component) {
         value: function changeCompletedState(id, e) {
             var _this2 = this;
 
-            console.log("Change Completed State Id: " + id);
-
             fetch(siteRoot + "/api/RoadMapItem/ChangeRoadMapItemCompletedStatus", {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
@@ -67,7 +65,6 @@ export var GoalContainer = function (_React$Component) {
                     _this2.setState({ list: list });
                 } else {
                     console.log("Item Failed to be Modified");
-                    console.log(data);
                 }
             });
         }
@@ -102,8 +99,6 @@ export var GoalContainer = function (_React$Component) {
         value: function confirmEdit(id, e) {
             var _this3 = this;
 
-            console.log("Confirm Edit Id: " + id);
-
             var list = this.state.list;
             var goal = {};
 
@@ -111,7 +106,6 @@ export var GoalContainer = function (_React$Component) {
                 if (item.id == id) {
                     goal = item;
                     console.log("Logging Goal . . .");
-                    console.log(goal);
                     return false;
                 }
                 return true;
@@ -131,7 +125,6 @@ export var GoalContainer = function (_React$Component) {
             }).then(function (response) {
                 return response.json();
             }).then(function (data) {
-                console.log(data);
                 if (data == 200) {
                     list.map(function (l) {
                         if (l.id == id) {
@@ -161,10 +154,6 @@ export var GoalContainer = function (_React$Component) {
     }, {
         key: "revealGoal",
         value: function revealGoal(id, e) {
-            console.log(e.target.value);
-            console.log(e);
-            console.log(id);
-
             var list = this.state.list;
 
             list.map(function (l) {
@@ -225,9 +214,6 @@ export var GoalContainer = function (_React$Component) {
             var _this5 = this;
 
             var object = "";
-
-            console.log("Render:");
-            console.log(this.state.list);
 
             object = this.state.list.map(function (list) {
                 var goalState = list.isComplete ? React.createElement(

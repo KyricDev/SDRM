@@ -54,7 +54,6 @@ class LoginForm extends React.Component {
         })
             .then(response => response.json())
             .then(info => {
-                console.log(info);
                 this.setState({data: info});
             })
             .then(() => {
@@ -86,7 +85,7 @@ class LoginForm extends React.Component {
         }
 
         let status = this.state.data.status;
-        if (this.state.data.status != 200){
+        if (this.state.data.status == 200){
             status = "";
         }
 
@@ -270,7 +269,6 @@ class RegisterForm extends React.Component {
         })
             .then(response => response.json())
             .then(info => {
-                console.log(info);
                 if (info.status == 200){
                     this.props.changeNavigation("0");
                 }
@@ -327,7 +325,6 @@ class FormRoot extends React.Component {
         this.setState({isAccountCreated: false});
     }
     render() {
-        console.log(this.state.form);
         if (this.state.form == 0){
             return (
                 <div className="container-parent">

@@ -74,7 +74,6 @@ var LoginForm = function (_React$Component) {
             }).then(function (response) {
                 return response.json();
             }).then(function (info) {
-                console.log(info);
                 _this3.setState({ data: info });
             }).then(function () {
                 if (_this3.state.data.status == 200) {
@@ -118,7 +117,7 @@ var LoginForm = function (_React$Component) {
             }
 
             var status = this.state.data.status;
-            if (this.state.data.status != 200) {
+            if (this.state.data.status == 200) {
                 status = "";
             }
 
@@ -312,7 +311,6 @@ var RegisterForm = function (_React$Component2) {
             }).then(function (response) {
                 return response.json();
             }).then(function (info) {
-                console.log(info);
                 if (info.status == 200) {
                     _this6.props.changeNavigation("0");
                 } else {
@@ -410,7 +408,6 @@ var FormRoot = function (_React$Component3) {
     }, {
         key: "render",
         value: function render() {
-            console.log(this.state.form);
             if (this.state.form == 0) {
                 return React.createElement(
                     "div",

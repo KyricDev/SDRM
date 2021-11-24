@@ -45,14 +45,10 @@ export var DeleteGoalContainer = function (_React$Component) {
             }).then(function (data) {
                 return _this2.setState({ list: data });
             });
-
-            console.log(this.state.list);
         }
     }, {
         key: "setDelete",
         value: function setDelete(id, e) {
-            console.log("delete: " + id);
-
             var list = this.state.list;
 
             list.map(function (list) {
@@ -61,9 +57,7 @@ export var DeleteGoalContainer = function (_React$Component) {
                 }
             });
 
-            this.setState({ list: list }, function () {
-                return console.log(list);
-            });
+            this.setState({ list: list });
         }
     }, {
         key: "confirmDelete",
@@ -78,8 +72,6 @@ export var DeleteGoalContainer = function (_React$Component) {
                     deleteList.push(list.id);
                 }
             });
-
-            console.log(deleteList);
 
             fetch(siteRoot + "/api/RoadMapItem/DeleteMultipleRoadMapItems", {
                 method: "POST",
@@ -102,7 +94,6 @@ export var DeleteGoalContainer = function (_React$Component) {
                     });
                 } else {
                     console.log("Items Failed to be Deleted");
-                    console.log(data);
                 }
             });
         }

@@ -116,7 +116,6 @@ export var AddGoalContainer = function (_React$Component3) {
             }).then(function (response) {
                 return response.json();
             }).then(function (data) {
-                console.log(data);
                 _this4.setState({ status: data });
             });
         }
