@@ -17,7 +17,7 @@ namespace SDRM
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-
+            /*
             using (var scope = host.Services.CreateScope()){
                 var dbAppUser = scope.ServiceProvider.GetRequiredService<ApplicationUserContext>();
                 dbAppUser.Database.Migrate();
@@ -26,7 +26,7 @@ namespace SDRM
                 var dbRoadMap = scope.ServiceProvider.GetRequiredService<RoadMapItemContext>();
                 dbRoadMap.Database.Migrate();
             }
-
+            */
             host.Run();
         }
 

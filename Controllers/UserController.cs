@@ -69,6 +69,16 @@ namespace SDRM.Controllers{
         [HttpGet("GetUser")]
         public ActionResult GetUser(){
             var user = new ApplicationUser();
+            _logger.LogInformation("Get: GetUser");
+
+            return Ok(200);
+        }
+        
+        [AllowAnonymous]
+        [HttpGet("GetUserTest")]
+        public async Task<ActionResult> GetUserTest(){
+            var user = await _userContext.Users.FindAsync("Dummy0");
+            _logger.LogInformation(user.Username);
 
             return Ok(200);
         }
