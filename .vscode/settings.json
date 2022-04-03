@@ -1,4 +1,4 @@
 {
     "appService.deploySubpath": "publish",
-    "appService.defaultWebAppToDeploy": "/subscriptions/c3c66ea7-71d8-4958-a476-2e9fe2fcf271/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/SDRM"
+    "appService.defaultWebAppToDeploy": "/subscriptions/0c7b42f4-d78a-4de9-bcf4-de5887b6393d/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/sdrm"
 }

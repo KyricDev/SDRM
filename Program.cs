@@ -26,6 +26,8 @@ namespace SDRM
                 var dbRoadMap = scope.ServiceProvider.GetRequiredService<RoadMapItemContext>();
                 dbRoadMap.Database.Migrate();
             }
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
