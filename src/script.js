@@ -1,5 +1,5 @@
 //export var siteRoot = "https://localhost:5001";
-export var siteRoot = "https://sdrm.azurewebsites.net";
+export var siteRoot = "https://ontrackrm.azurewebsites.net";
 
 export class FormField extends React.Component {
     constructor(props) {

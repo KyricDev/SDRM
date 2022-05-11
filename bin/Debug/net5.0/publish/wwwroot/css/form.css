@@ -1,0 +1,111 @@
+body{
+    margin: 0;
+    font-family: 'Open Sans', sans-serif;
+}
+button{
+    border-radius: 40px;
+    height: 55px;
+    width: calc(50vw * 0.32);
+    font-size: 18px;
+}
+input[type="text"]{
+    border: none;
+    border-bottom: 1px solid;
+    width: calc(50vw * .66);
+}
+.container-parent{
+    display: flex;
+    flex-direction: row;
+}
+.container-left{
+    background-color: #640D14;
+    color: white;
+    width: 50vw;
+    height: 100vh;
+}
+.title-sdrm{
+    margin-top: 270px;
+    margin-left: 70px;
+    font-family: 'Mulish', sans-serif;
+    font-size: 64px;
+}
+.tagline-sdrm{
+    margin-left: 70px;
+    font-family: 'Rozha One', serif;
+    font-size: 36px;
+}
+.container-right{
+/*    display: flex;
+    flex-direction: column;
+    justify-content: center;*/
+    margin-top: 157px;
+    background-color: #FFFF;
+    width: 50vw;
+    height: calc(100vh - 157px);
+}
+.container-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-bottom: 60px;
+}
+.form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.greeting{
+    font-size: 20px;
+    align-self: flex-start;
+    margin-left: calc( (50vw - ( 50vw * .66 )) * 0.5);
+    /*margin-left: 8.65vw;*/
+    padding-bottom: 40px;
+}
+.field{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.button-submit{
+    padding-top: 40px;
+}
+.button-form{
+    width: 250px;
+    height: 53px;
+    border-radius: 15px;
+    border: none;
+}
+.enabled{
+    background-color: #38040E;
+    color: white;
+}
+.enabled:hover{
+    cursor: pointer;
+}
+.disabled{
+    background-color: grey;
+    color: rgb(180, 180, 180);
+}
+.status{
+    font-family: 'Open Sans', sans-serif;
+    font-size: 12px;
+    margin-top: 10px;
+    margin-bottom: 14px;
+    color: red;
+}
+.button-click button{
+    background-color: #F9DBBD;
+    border: none;
+}
+.button-unclick button{
+    border: 1px solid #FF2A2A;
+    background-color: white;
+    color: #FF2A2A;
+}.button-unclick button:hover{
+    cursor: pointer;
+}
+.button-login{
+    margin-right: calc( ((50vw * .66) - (2 * 50vw * 0.32))*.5  )
+}
+.button-register{
+    margin-left: calc( ((50vw * .66) - (2 * 50vw * 0.32))*.5  )
+}

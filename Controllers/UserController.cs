@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
@@ -77,7 +78,22 @@ namespace SDRM.Controllers{
         [AllowAnonymous]
         [HttpGet("GetUserTest")]
         public async Task<ActionResult> GetUserTest(){
+            try{
             var user = await _userContext.Users.FindAsync("Dummy0");
+            _logger.LogInformation(user.Username);
+            }
+            catch(Exception err){
+                _logger.LogInformation(err.Message);
+                return BadRequest($"{err.Message} - {err.Data} - {err.HelpLink} - {err.HResult} - {err.InnerException} - {err.Source} - {err.StackTrace} - {err.TargetSite}");
+            }
+
+            return Ok(200);
+        }
+
+        [AllowAnonymous]
+        [HttpGet("GetUserTest2")]
+        public ActionResult GetUserTest2(){
+            var user = _userContext.Users.Find("Dummy0");
             _logger.LogInformation(user.Username);
 
             return Ok(200);
