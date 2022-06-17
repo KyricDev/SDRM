@@ -49,13 +49,13 @@ namespace SDRM
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SDRM", Version = "v1" });
             });
             services.AddDbContext<RoadMapItemContext>(options => 
-                options.UseNpgsql(Configuration.GetConnectionString("RoadMapItemContext"))
+                options.UseNpgsql(process.env.ROADMAP_ITEM_CONTEXT/*Configuration.GetConnectionString("RoadMapItemContext")*/)
             );
             services.AddDbContext<ApplicationUserContext>(options => 
-                options.UseNpgsql(Configuration.GetConnectionString("ApplicationUserContext"))
+                options.UseNpgsql(process.env.APPLICATION_USER_CONTEXT/*Configuration.GetConnectionString("ApplicationUserContext")*/)
             );
             services.AddDbContext<UserContext>(options =>
-                options.UseNpgsql(Configuration.GetConnectionString("UserContext"))
+                options.UseNpgsql(process.env.USER_CONTEXT/*Configuration.GetConnectionString("UserContext")*/)
             );
             services.AddIdentity<ApplicationUser, IdentityRole>(options => {
                 options.Password.RequireDigit = false;
