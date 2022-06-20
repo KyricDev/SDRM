@@ -8,7 +8,7 @@ button{
     width: calc(50vw * 0.32);
     font-size: 18px;
 }
-input[type="text"]{
+input{
     border: none;
     border-bottom: 1px solid;
     width: calc(50vw * .66);
@@ -108,4 +108,30 @@ input[type="text"]{
 }
 .button-register{
     margin-left: calc( ((50vw * .66) - (2 * 50vw * 0.32))*.5  )
+}
+
+@media screen and (min-height: 100vw){
+    h1, h2{
+        margin: 0px;
+        padding: 0px;
+    }
+    .container-left{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .title-sdrm{
+        margin-top: 0px;
+    }
+    .tagline-sdrm{
+        margin-top: 2rem;
+    }
+    
+    .container-right{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 0px;
+        height: 100vh;
+    }
 }

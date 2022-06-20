@@ -21,18 +21,19 @@ using SDRM.Models;
 namespace SDRM
 {
     public class Startup
-    {
-        public Startup(IConfiguration configuration)
+    {   
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
+            Env = env;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Env { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-
+        {   
             services.AddControllers();
             services.AddControllersWithViews();
             services.AddLogging();
@@ -49,13 +50,13 @@ namespace SDRM
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SDRM", Version = "v1" });
             });
             services.AddDbContext<RoadMapItemContext>(options => 
-                options.UseNpgsql(process.env.ROADMAP_ITEM_CONTEXT/*Configuration.GetConnectionString("RoadMapItemContext")*/)
+                options.UseNpgsql(/*Env.ROADMAP_ITEM_CONTEXT*/Configuration.GetConnectionString("RoadMapItemContext"))
             );
             services.AddDbContext<ApplicationUserContext>(options => 
-                options.UseNpgsql(process.env.APPLICATION_USER_CONTEXT/*Configuration.GetConnectionString("ApplicationUserContext")*/)
+                options.UseNpgsql(/*Env.APPLICATION_USER_CONTEXT*/Configuration.GetConnectionString("ApplicationUserContext"))
             );
             services.AddDbContext<UserContext>(options =>
-                options.UseNpgsql(process.env.USER_CONTEXT/*Configuration.GetConnectionString("UserContext")*/)
+                options.UseNpgsql(/*Env.USER_CONTEXT*/Configuration.GetConnectionString("UserContext"))
             );
             services.AddIdentity<ApplicationUser, IdentityRole>(options => {
                 options.Password.RequireDigit = false;
@@ -100,7 +101,7 @@ namespace SDRM
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SDRM v1"));
             }
-
+            
             app.UseHttpsRedirection();
             app.UseSpaStaticFiles();
 

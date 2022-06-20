@@ -12,12 +12,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
 
-//"Host=127.0.0.1 ; Database=RoadMapItemContext; Username=Ricky; Password=Madrid0424!;"
-/*
-"RoadMapItemContext": "host=sdrmdb.postgres.database.azure.com; port=5432; database=RoadMapItemContext; username=KyricDev; password=Madrid0424!; Trust Server Certificate=true; SSL Mode=Require;",
-"ApplicationUserContext": "host=sdrmdb.postgres.database.azure.com; port=5432; database=ApplicationUser; username=KyricDev; password=Madrid0424!; Trust Server Certificate=true; SSL Mode=Require;",
-"UserContext":"host=sdrmdb.postgres.database.azure.com; port=5432; database=RoadMapItemContext; username=KyricDev; password=Madrid0424!; Trust Server Certificate=true; SSL Mode=Require;"
-*/
 namespace SDRM.Controllers{
     [ApiController]
     [Route("/api/[controller]")]

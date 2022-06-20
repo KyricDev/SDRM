@@ -1,4 +1,4 @@
-//export var siteRoot = "https://localhost:5001";
+// export var siteRoot = "https://localhost:5001";
 export var siteRoot = "https://ontrackrm.azurewebsites.net";
 
 export class FormField extends React.Component {
@@ -25,12 +25,15 @@ export class FormField extends React.Component {
         else if (this.props.field == "confirmpassword"){
             field = "Confirm Password";
         }
+        
+        let type = "text";
+        if (field != "Username") type = "password";
 
         return (
             <div className="field" >
                 <label>{field}</label>
                 <br />
-                <input type="text" name={field} onChange={this.updateField}></input>
+                <input type={type} name={field} onChange={this.updateField}></input>
             </div>
         )
     }
